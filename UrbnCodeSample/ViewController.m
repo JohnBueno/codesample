@@ -27,7 +27,8 @@
 
 - (IBAction)searchBtnPressed:(id)sender {
     NSLog(@"test search");
-    [Venues testAFNetworking];
+    [self performSegueWithIdentifier:@"showResults" sender:nil];
+    //[Venues testAFNetworking];
 }
 
 @end
