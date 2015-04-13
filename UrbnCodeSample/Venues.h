@@ -10,6 +10,6 @@
 
 @interface Venues : NSObject
 
-+(void)testAFNetworking;
++(void)getVenuesNearLatitude:(float)latitude andLongitude:(float)longitude;
 
 @end

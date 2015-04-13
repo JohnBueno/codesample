@@ -10,54 +10,58 @@
 #import "Venues.h"
 #import <CoreLocation/CoreLocation.h>
 
-@interface ViewController ()<CLLocationManagerDelegate>
+@interface ViewController () <CLLocationManagerDelegate>
 
 - (IBAction)getLocationPressed:(id)sender;
 
 @end
 
-@implementation ViewController{
-    CLLocationManager *locationManager;
-    float latitude;
-    float longitude;
-    
+@implementation ViewController {
+  CLLocationManager *locationManager;
+  float latitude;
+  float longitude;
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    locationManager = [[CLLocationManager alloc] init];
+  [super viewDidLoad];
+  locationManager = [[CLLocationManager alloc] init];
 }
 
 - (IBAction)getLocationPressed:(id)sender {
-    NSLog(@"get location");
-    locationManager.delegate = self;
-    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        [locationManager requestWhenInUseAuthorization];
-    }
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [locationManager startUpdatingLocation];
+  NSLog(@"get location");
+  locationManager.delegate = self;
+  if ([locationManager
+          respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+    [locationManager requestWhenInUseAuthorization];
+  }
+  locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+  [locationManager startUpdatingLocation];
 }
 
 - (IBAction)searchBtnPressed:(id)sender {
-    NSLog(@"test search");
-    [self performSegueWithIdentifier:@"showResults" sender:nil];
-    //[Venues testAFNetworking];
+  NSLog(@"test search");
+  [self performSegueWithIdentifier:@"showResults" sender:nil];
+  //[Venues testAFNetworking];
 }
 
 #pragma mark CLLocationManagerDelegate Methods
 
--(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-    NSLog(@"Location Error %@", error);
+- (void)locationManager:(CLLocationManager *)manager
+       didFailWithError:(NSError *)error {
+  NSLog(@"Location Error %@", error);
 }
 
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations {
-    CLLocation *location = [locations lastObject];
-    
+  CLLocation *location = [locations lastObject];
+
+  if (location != nil) {
     latitude = location.coordinate.latitude;
     longitude = location.coordinate.longitude;
-    [locationManager stopUpdatingLocation];
-}
+    [Venues getVenuesNearLatitude:latitude andLongitude:longitude];
+  }
 
+  [locationManager stopUpdatingLocation];
+}
 
 @end

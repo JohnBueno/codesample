@@ -8,32 +8,31 @@
 
 #import "Venues.h"
 #import <AFNetworking/AFNetworking.h>
+#import "AFAppFourSquareClient.h"
 
 #define kCLIENTID @"YDU2NKEWT5N2VQPROGBXBUENW0GR3R4P41KDEZG1XLW5OANJ"
 #define kCLIENTSECRET @"CTRLBHZGCDW5WYQSSOYFBZ0VGTUNMXJI1DGPHDRWV3DNCUU0"
 
-
 @implementation Venues
 
 
-+(void)testAFNetworking{
-    
-    NSLog(@"test");
-    NSString* testURL = @"https://api.foursquare.com/v2/venues/search?client_id=YDU2NKEWT5N2VQPROGBXBUENW0GR3R4P41KDEZG1XLW5OANJ&client_secret=CTRLBHZGCDW5WYQSSOYFBZ0VGTUNMXJI1DGPHDRWV3DNCUU0&v=20130815&ll=40.7,-74&query=sushi";
-    
-    NSURL *url = [NSURL URLWithString:testURL];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *sushi = (NSDictionary *)responseObject;
-        
-        NSLog(@"sushi %@", sushi);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error %@", error.localizedDescription);
++ (void)getVenuesNearLatitude:(float)latitude andLongitude:(float)longitude
+{
+    NSString* ll = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
+    NSDictionary* params = @{
+        @"client_id" : kCLIENTID,
+        @"client_secret" : kCLIENTSECRET,
+        @"v" : @"20130815",
+        @"limit" : @"10",
+        @"ll" : ll,
+        @"query" : @"sushi"
+    };
+
+    [[AFAppFourSquareClient sharedClient] GET:@"/v2/venues/search" parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
+        NSLog(@"response object %@", responseObject);
+    } failure:^(NSURLSessionDataTask* task, NSError* error) {
+        NSLog(@"error %@", error.localizedDescription);
     }];
-    
-    [operation start];
 }
 
 @end
