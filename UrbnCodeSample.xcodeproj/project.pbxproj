@@ -102,6 +102,8 @@
 		6A759FFA1ADC226D0065E91A /* UrbnCodeSample */ = {
 			isa = PBXGroup;
 			children = (
+				6A3A412C1ADC2C5500388198 /* Venues.h */,
+				6A3A412D1ADC2C5500388198 /* Venues.m */,
 				6A759FFF1ADC226D0065E91A /* AppDelegate.h */,
 				6A75A0001ADC226D0065E91A /* AppDelegate.m */,
 				6A75A0051ADC226D0065E91A /* ViewController.h */,
@@ -111,8 +113,6 @@
 				6A75A00D1ADC226D0065E91A /* LaunchScreen.xib */,
 				6A75A0021ADC226D0065E91A /* UrbnCodeSample.xcdatamodeld */,
 				6A759FFB1ADC226D0065E91A /* Supporting Files */,
-				6A3A412C1ADC2C5500388198 /* Venues.h */,
-				6A3A412D1ADC2C5500388198 /* Venues.m */,
 			);
 			path = UrbnCodeSample;
 			sourceTree = "<group>";

@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "Venues.h"
 
 @interface ViewController ()
 
@@ -22,6 +23,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)searchBtnPressed:(id)sender {
+    NSLog(@"test search");
+    [Venues testAFNetworking];
 }
 
 @end

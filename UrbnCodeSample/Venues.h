@@ -10,4 +10,6 @@
 
 @interface Venues : NSObject
 
++(void)testAFNetworking;
+
 @end
