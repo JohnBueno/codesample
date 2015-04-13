@@ -32,6 +32,9 @@
                                 <state key="normal" title="Find my location">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="getLocationPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="B06-61-jhl"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8DO-s6-Cl5">
                                 <rect key="frame" x="16" y="349" width="343" height="30"/>

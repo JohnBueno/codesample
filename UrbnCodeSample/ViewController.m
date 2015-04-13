@@ -8,21 +8,34 @@
 
 #import "ViewController.h"
 #import "Venues.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface ViewController ()
+@interface ViewController ()<CLLocationManagerDelegate>
+
+- (IBAction)getLocationPressed:(id)sender;
 
 @end
 
-@implementation ViewController
+@implementation ViewController{
+    CLLocationManager *locationManager;
+    float latitude;
+    float longitude;
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    locationManager = [[CLLocationManager alloc] init];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)getLocationPressed:(id)sender {
+    NSLog(@"get location");
+    locationManager.delegate = self;
+    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [locationManager requestWhenInUseAuthorization];
+    }
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [locationManager startUpdatingLocation];
 }
 
 - (IBAction)searchBtnPressed:(id)sender {
@@ -30,5 +43,21 @@
     [self performSegueWithIdentifier:@"showResults" sender:nil];
     //[Venues testAFNetworking];
 }
+
+#pragma mark CLLocationManagerDelegate Methods
+
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
+    NSLog(@"Location Error %@", error);
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+     didUpdateLocations:(NSArray *)locations {
+    CLLocation *location = [locations lastObject];
+    
+    latitude = location.coordinate.latitude;
+    longitude = location.coordinate.longitude;
+    [locationManager stopUpdatingLocation];
+}
+
 
 @end
