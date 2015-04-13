@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50D35EED1B7F95333962E209 /* libPods-UrbnCodeSample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EDF67DF2551F38099AE7ED91 /* libPods-UrbnCodeSample.a */; };
 		6A759FFE1ADC226D0065E91A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A759FFD1ADC226D0065E91A /* main.m */; };
 		6A75A0011ADC226D0065E91A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A75A0001ADC226D0065E91A /* AppDelegate.m */; };
 		6A75A0041ADC226D0065E91A /* UrbnCodeSample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6A75A0021ADC226D0065E91A /* UrbnCodeSample.xcdatamodeld */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D3A53EB8BEF37D74378C735 /* Pods-UrbnCodeSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UrbnCodeSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UrbnCodeSample/Pods-UrbnCodeSample.debug.xcconfig"; sourceTree = "<group>"; };
 		6A759FF81ADC226D0065E91A /* UrbnCodeSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UrbnCodeSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A759FFC1ADC226D0065E91A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A759FFD1ADC226D0065E91A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -42,6 +44,8 @@
 		6A75A0141ADC226D0065E91A /* UrbnCodeSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UrbnCodeSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A75A0191ADC226D0065E91A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A75A01A1ADC226D0065E91A /* UrbnCodeSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UrbnCodeSampleTests.m; sourceTree = "<group>"; };
+		DEBC8A174B86CE0F95598394 /* Pods-UrbnCodeSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UrbnCodeSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-UrbnCodeSample/Pods-UrbnCodeSample.release.xcconfig"; sourceTree = "<group>"; };
+		EDF67DF2551F38099AE7ED91 /* libPods-UrbnCodeSample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UrbnCodeSample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50D35EED1B7F95333962E209 /* libPods-UrbnCodeSample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,12 +67,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		453487EC5AF96D9108248C25 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0D3A53EB8BEF37D74378C735 /* Pods-UrbnCodeSample.debug.xcconfig */,
+				DEBC8A174B86CE0F95598394 /* Pods-UrbnCodeSample.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		6A759FEF1ADC226D0065E91A = {
 			isa = PBXGroup;
 			children = (
 				6A759FFA1ADC226D0065E91A /* UrbnCodeSample */,
 				6A75A0171ADC226D0065E91A /* UrbnCodeSampleTests */,
 				6A759FF91ADC226D0065E91A /* Products */,
+				453487EC5AF96D9108248C25 /* Pods */,
+				EFC4C524F4A8C23F6741E5BF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -122,6 +138,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		EFC4C524F4A8C23F6741E5BF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EDF67DF2551F38099AE7ED91 /* libPods-UrbnCodeSample.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -129,9 +153,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A75A01E1ADC226D0065E91A /* Build configuration list for PBXNativeTarget "UrbnCodeSample" */;
 			buildPhases = (
+				50AFF03FA74454312E9BD221 /* Check Pods Manifest.lock */,
 				6A759FF41ADC226D0065E91A /* Sources */,
 				6A759FF51ADC226D0065E91A /* Frameworks */,
 				6A759FF61ADC226D0065E91A /* Resources */,
+				814C43E4480C65CD221D94CE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -216,6 +242,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		50AFF03FA74454312E9BD221 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		814C43E4480C65CD221D94CE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UrbnCodeSample/Pods-UrbnCodeSample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6A759FF41ADC226D0065E91A /* Sources */ = {
@@ -349,6 +408,7 @@
 		};
 		6A75A01F1ADC226D0065E91A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0D3A53EB8BEF37D74378C735 /* Pods-UrbnCodeSample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = UrbnCodeSample/Info.plist;
@@ -359,6 +419,7 @@
 		};
 		6A75A0201ADC226D0065E91A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DEBC8A174B86CE0F95598394 /* Pods-UrbnCodeSample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = UrbnCodeSample/Info.plist;
@@ -420,6 +481,7 @@
 				6A75A0201ADC226D0065E91A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6A75A0211ADC226D0065E91A /* Build configuration list for PBXNativeTarget "UrbnCodeSampleTests" */ = {
 			isa = XCConfigurationList;
@@ -428,6 +490,7 @@
 				6A75A0231ADC226D0065E91A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
