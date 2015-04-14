@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 John McCartney. All rights reserved.
 //
 
-#import "Venues.h"
+#import "FourSquare.h"
 #import <AFNetworking/AFNetworking.h>
 #import "AFAppFourSquareClient.h"
 #import "CoreDataStack.h"
@@ -18,10 +18,12 @@
 #define kCLIENTID @"YDU2NKEWT5N2VQPROGBXBUENW0GR3R4P41KDEZG1XLW5OANJ"
 #define kCLIENTSECRET @"CTRLBHZGCDW5WYQSSOYFBZ0VGTUNMXJI1DGPHDRWV3DNCUU0"
 
-@implementation Venues
+@implementation FourSquare
 
 + (void)getVenuesNearLatitude:(float)latitude andLongitude:(float)longitude
 {
+
+    [[CoreDataStack defaultStack] clearAll];
     NSString* ll = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
     NSDictionary* params = @{
         @"client_id" : kCLIENTID,
@@ -36,7 +38,7 @@
         NSMutableArray *venues = [[NSMutableArray alloc] initWithArray:[[responseObject objectForKey:@"response"] objectForKey:@"venues"]];
         
         for (NSDictionary* venue in venues) {
-            [Venues saveVenueToStoreWithVenue:venue];
+            [FourSquare saveVenueToStoreWithVenue:venue];
         }
         
         NSLog(@"response object %@", [venues firstObject]);

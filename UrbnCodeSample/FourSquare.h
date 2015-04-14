@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Venues : NSObject
+@interface FourSquare : NSObject
 
 + (void)getVenuesNearLatitude:(float)latitude andLongitude:(float)longitude;
 + (void)saveVenueToStoreWithVenue:(NSDictionary*)venue;

@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "Venues.h"
+#import "FourSquare.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface ViewController () <CLLocationManagerDelegate>
@@ -58,7 +58,7 @@
   if (location != nil) {
     latitude = location.coordinate.latitude;
     longitude = location.coordinate.longitude;
-    [Venues getVenuesNearLatitude:latitude andLongitude:longitude];
+    [FourSquare getVenuesNearLatitude:latitude andLongitude:longitude];
   }
 
   [locationManager stopUpdatingLocation];

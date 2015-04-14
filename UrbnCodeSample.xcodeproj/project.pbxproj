@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		50D35EED1B7F95333962E209 /* libPods-UrbnCodeSample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EDF67DF2551F38099AE7ED91 /* libPods-UrbnCodeSample.a */; };
-		6A3A412E1ADC2C5500388198 /* Venues.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3A412D1ADC2C5500388198 /* Venues.m */; };
+		6A3A412E1ADC2C5500388198 /* FourSquare.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3A412D1ADC2C5500388198 /* FourSquare.m */; };
 		6A3A413A1ADC509700388198 /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3A41391ADC509700388198 /* CoreDataStack.m */; };
 		6A3A413C1ADC555600388198 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A3A413B1ADC555600388198 /* CoreLocation.framework */; };
 		6A759FFE1ADC226D0065E91A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A759FFD1ADC226D0065E91A /* main.m */; };
@@ -37,8 +37,8 @@
 
 /* Begin PBXFileReference section */
 		0D3A53EB8BEF37D74378C735 /* Pods-UrbnCodeSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UrbnCodeSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UrbnCodeSample/Pods-UrbnCodeSample.debug.xcconfig"; sourceTree = "<group>"; };
-		6A3A412C1ADC2C5500388198 /* Venues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Venues.h; sourceTree = "<group>"; };
-		6A3A412D1ADC2C5500388198 /* Venues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Venues.m; sourceTree = "<group>"; };
+		6A3A412C1ADC2C5500388198 /* FourSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourSquare.h; sourceTree = "<group>"; };
+		6A3A412D1ADC2C5500388198 /* FourSquare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourSquare.m; sourceTree = "<group>"; };
 		6A3A41381ADC509700388198 /* CoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStack.h; sourceTree = "<group>"; };
 		6A3A41391ADC509700388198 /* CoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStack.m; sourceTree = "<group>"; };
 		6A3A413B1ADC555600388198 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -174,8 +174,8 @@
 				6AE9BA511ADD4ED000347F39 /* Venue.m */,
 				6AE9BA531ADD4ED100347F39 /* Contact.h */,
 				6AE9BA541ADD4ED100347F39 /* Contact.m */,
-				6A3A412C1ADC2C5500388198 /* Venues.h */,
-				6A3A412D1ADC2C5500388198 /* Venues.m */,
+				6A3A412C1ADC2C5500388198 /* FourSquare.h */,
+				6A3A412D1ADC2C5500388198 /* FourSquare.m */,
 				6A3A41381ADC509700388198 /* CoreDataStack.h */,
 				6A3A41391ADC509700388198 /* CoreDataStack.m */,
 			);
@@ -342,7 +342,7 @@
 				6A75A0011ADC226D0065E91A /* AppDelegate.m in Sources */,
 				6AE9BA4D1ADC693F00347F39 /* AFAppFourSquareClient.m in Sources */,
 				6A759FFE1ADC226D0065E91A /* main.m in Sources */,
-				6A3A412E1ADC2C5500388198 /* Venues.m in Sources */,
+				6A3A412E1ADC2C5500388198 /* FourSquare.m in Sources */,
 				6A75A0071ADC226D0065E91A /* ViewController.m in Sources */,
 				6AE9BA581ADD5A8B00347F39 /* VenueTableViewController.m in Sources */,
 				6AE9BA521ADD4ED000347F39 /* Venue.m in Sources */,
