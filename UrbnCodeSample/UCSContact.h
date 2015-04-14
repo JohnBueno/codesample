@@ -12,7 +12,7 @@
 
 @class UCSVenue;
 
-@interface UCSContact : UCSVenue
+@interface UCSContact : NSManagedObject
 
 @property (nonatomic, retain) NSString * formattedPhone;
 @property (nonatomic, retain) NSString * phone;

@@ -8,12 +8,12 @@
         <relationship name="icon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSIcon" inverseName="category" inverseEntity="UCSIcon" syncable="YES"/>
         <relationship name="venue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSVenue" inverseName="categories" inverseEntity="UCSVenue" syncable="YES"/>
     </entity>
-    <entity name="UCSContact" representedClassName="UCSContact" parentEntity="UCSVenue" syncable="YES">
+    <entity name="UCSContact" representedClassName="UCSContact" syncable="YES">
         <attribute name="formattedPhone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSVenue" inverseName="contact" inverseEntity="UCSVenue" syncable="YES"/>
     </entity>
-    <entity name="UCSIcon" representedClassName="UCSIcon" parentEntity="UCSCategory" syncable="YES">
+    <entity name="UCSIcon" representedClassName="UCSIcon" syncable="YES">
         <attribute name="prefix" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSCategory" inverseName="icon" inverseEntity="UCSCategory" syncable="YES"/>
@@ -28,9 +28,9 @@
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSContact" inverseName="relationship" inverseEntity="UCSContact" syncable="YES"/>
     </entity>
     <elements>
-        <element name="UCSContact" positionX="-45" positionY="27" width="128" height="88"/>
-        <element name="UCSVenue" positionX="-263" positionY="-18" width="128" height="148"/>
         <element name="UCSCategory" positionX="-117" positionY="72" width="128" height="135"/>
+        <element name="UCSContact" positionX="-45" positionY="27" width="128" height="90"/>
         <element name="UCSIcon" positionX="-99" positionY="126" width="128" height="90"/>
+        <element name="UCSVenue" positionX="-263" positionY="-18" width="128" height="150"/>
     </elements>
 </model>

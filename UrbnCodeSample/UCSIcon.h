@@ -12,10 +12,10 @@
 
 @class UCSCategory;
 
-@interface UCSIcon : UCSCategory
+@interface UCSIcon : NSManagedObject
 
-@property (nonatomic, retain) NSString * prefix;
-@property (nonatomic, retain) NSString * suffix;
-@property (nonatomic, retain) UCSCategory *category;
+@property (nonatomic, retain) NSString* prefix;
+@property (nonatomic, retain) NSString* suffix;
+@property (nonatomic, retain) UCSCategory* category;
 
 @end
