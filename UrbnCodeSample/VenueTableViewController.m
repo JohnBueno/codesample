@@ -57,12 +57,14 @@
 {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    Venue* entry = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = entry.name;
-    //NSLog(@"category name %@", entry.category.name);
+    Venue* venue = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSLog(@"contact %@", [venue.contact valueForKey:@"phone"]);
+    cell.textLabel.text = venue.name;
 
     return cell;
 }
+
+#pragma mark - Fetch CoreData
 
 - (NSFetchRequest*)entryListFetchRequest
 {
@@ -92,19 +94,7 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController*)controller
 {
     [self.tableView reloadData];
-    Venue* venue = [self.fetchedResultsController objectAtIndexPath:0];
-    NSLog(@"Venue %@", venue.name);
 }
-
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
 
 /*
 // Override to support conditional editing of the table view.

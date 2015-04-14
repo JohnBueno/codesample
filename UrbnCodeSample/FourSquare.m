@@ -48,13 +48,14 @@
     }];
 }
 
-+ (void)saveVenueToStoreWithVenue:(NSDictionary*)_venue
+// Manual Object Mapping
++ (void)saveResponse:(NSDictionary*)response
 {
     CoreDataStack* coreDataStack = [CoreDataStack defaultStack];
     Venue* venue = [NSEntityDescription insertNewObjectForEntityForName:@"Venue" inManagedObjectContext:coreDataStack.managedObjectContext];
     Contact* contact = [NSEntityDescription insertNewObjectForEntityForName:@"Contact" inManagedObjectContext:coreDataStack.managedObjectContext];
 
-    [venue setName:[_venue objectForKey:@"name"]];
+    [venue setName:[response objectForKey:@"name"]];
     [contact setPhone:@"1111"];
     [venue setContact:contact];
 
