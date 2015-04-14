@@ -9,12 +9,16 @@
 #import "Venues.h"
 #import <AFNetworking/AFNetworking.h>
 #import "AFAppFourSquareClient.h"
+#import "CoreDataStack.h"
+
+//Coredata
+#import "Venue.h"
+#import "Contact.h"
 
 #define kCLIENTID @"YDU2NKEWT5N2VQPROGBXBUENW0GR3R4P41KDEZG1XLW5OANJ"
 #define kCLIENTSECRET @"CTRLBHZGCDW5WYQSSOYFBZ0VGTUNMXJI1DGPHDRWV3DNCUU0"
 
 @implementation Venues
-
 
 + (void)getVenuesNearLatitude:(float)latitude andLongitude:(float)longitude
 {
@@ -29,10 +33,30 @@
     };
 
     [[AFAppFourSquareClient sharedClient] GET:@"/v2/venues/search" parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
-        NSLog(@"response object %@", responseObject);
+        NSMutableArray *venues = [[NSMutableArray alloc] initWithArray:[[responseObject objectForKey:@"response"] objectForKey:@"venues"]];
+        
+        for (NSDictionary* venue in venues) {
+            [Venues saveVenueToStoreWithVenue:venue];
+        }
+        
+        NSLog(@"response object %@", [venues firstObject]);
+
     } failure:^(NSURLSessionDataTask* task, NSError* error) {
         NSLog(@"error %@", error.localizedDescription);
     }];
+}
+
++ (void)saveVenueToStoreWithVenue:(NSDictionary*)_venue
+{
+    CoreDataStack* coreDataStack = [CoreDataStack defaultStack];
+    Venue* venue = [NSEntityDescription insertNewObjectForEntityForName:@"Venue" inManagedObjectContext:coreDataStack.managedObjectContext];
+    Contact* contact = [NSEntityDescription insertNewObjectForEntityForName:@"Contact" inManagedObjectContext:coreDataStack.managedObjectContext];
+
+    [venue setName:[_venue objectForKey:@"name"]];
+    [contact setPhone:@"1111"];
+    [venue setContact:contact];
+
+    [coreDataStack saveContext];
 }
 
 @end

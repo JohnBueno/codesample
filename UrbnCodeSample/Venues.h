@@ -10,6 +10,6 @@
 
 @interface Venues : NSObject
 
-+(void)getVenuesNearLatitude:(float)latitude andLongitude:(float)longitude;
-
++ (void)getVenuesNearLatitude:(float)latitude andLongitude:(float)longitude;
++ (void)saveVenueToStoreWithVenue:(NSDictionary*)venue;
 @end
