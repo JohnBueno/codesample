@@ -8,8 +8,8 @@
 
 #import "VenueTableViewController.h"
 #import "CoreDataStack.h"
-#import "Venue.h"
-#import "Contact.h"
+#import "UCSVenue.h"
+#import "UCSContact.h"
 
 @interface VenueTableViewController () <NSFetchedResultsControllerDelegate>
 
@@ -57,7 +57,8 @@
 {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    Venue* venue = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    UCSVenue* venue = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSLog(@"url %@", [venue valueForKey:@"url"]);
     NSLog(@"contact %@", [venue.contact valueForKey:@"phone"]);
     cell.textLabel.text = venue.name;
 
@@ -68,7 +69,7 @@
 
 - (NSFetchRequest*)entryListFetchRequest
 {
-    NSFetchRequest* fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Venue"];
+    NSFetchRequest* fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"UCSVenue"];
 
     fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:NO] ];
 

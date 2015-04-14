@@ -1,17 +1,19 @@
 //
-//  Venue.m
+//  UCSIcon.m
 //  UrbnCodeSample
 //
 //  Created by John McCartney on 4/14/15.
 //  Copyright (c) 2015 John McCartney. All rights reserved.
 //
 
-#import "Venue.h"
+#import "UCSIcon.h"
+#import "UCSCategory.h"
 
-@implementation Venue
 
-@dynamic name;
-@dynamic url;
-@dynamic contact;
+@implementation UCSIcon
+
+@dynamic prefix;
+@dynamic suffix;
+@dynamic category;
 
 @end

@@ -1,17 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D131" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Contact" representedClassName="Contact" syncable="YES">
+    <entity name="UCSCategory" representedClassName="UCSCategory" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pluralName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="primary" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="shortName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="icon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSIcon" inverseName="category" inverseEntity="UCSIcon" syncable="YES"/>
+        <relationship name="venue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSVenue" inverseName="categories" inverseEntity="UCSVenue" syncable="YES"/>
+    </entity>
+    <entity name="UCSContact" representedClassName="UCSContact" parentEntity="UCSVenue" syncable="YES">
         <attribute name="formattedPhone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Venue" inverseName="contact" inverseEntity="Venue" syncable="YES"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSVenue" inverseName="contact" inverseEntity="UCSVenue" syncable="YES"/>
     </entity>
-    <entity name="Venue" representedClassName="Venue" syncable="YES">
+    <entity name="UCSIcon" representedClassName="UCSIcon" parentEntity="UCSCategory" syncable="YES">
+        <attribute name="prefix" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSCategory" inverseName="icon" inverseEntity="UCSCategory" syncable="YES"/>
+    </entity>
+    <entity name="UCSVenue" representedClassName="UCSVenue" syncable="YES">
+        <attribute name="hasMenu" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="referralId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="relationship" inverseEntity="Contact" syncable="YES"/>
+        <attribute name="verified" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UCSCategory" inverseName="venue" inverseEntity="UCSCategory" syncable="YES"/>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSContact" inverseName="relationship" inverseEntity="UCSContact" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Venue" positionX="-63" positionY="-18" width="128" height="90"/>
-        <element name="Contact" positionX="-45" positionY="27" width="128" height="90"/>
+        <element name="UCSContact" positionX="-45" positionY="27" width="128" height="88"/>
+        <element name="UCSVenue" positionX="-263" positionY="-18" width="128" height="148"/>
+        <element name="UCSCategory" positionX="-117" positionY="72" width="128" height="135"/>
+        <element name="UCSIcon" positionX="-99" positionY="126" width="128" height="90"/>
     </elements>
 </model>

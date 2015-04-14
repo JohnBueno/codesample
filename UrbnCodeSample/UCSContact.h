@@ -1,5 +1,5 @@
 //
-//  Contact.h
+//  UCSContact.h
 //  UrbnCodeSample
 //
 //  Created by John McCartney on 4/14/15.
@@ -8,13 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "UCSVenue.h"
 
-@class Venue;
+@class UCSVenue;
 
-@interface Contact : NSManagedObject
+@interface UCSContact : UCSVenue
 
 @property (nonatomic, retain) NSString * formattedPhone;
 @property (nonatomic, retain) NSString * phone;
-@property (nonatomic, retain) Venue *relationship;
+@property (nonatomic, retain) UCSVenue *relationship;
 
 @end

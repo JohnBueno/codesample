@@ -12,8 +12,8 @@
 #import "CoreDataStack.h"
 
 //Coredata
-#import "Venue.h"
-#import "Contact.h"
+#import "UCSVenue.h"
+#import "UCSContact.h"
 
 #define kCLIENTID @"YDU2NKEWT5N2VQPROGBXBUENW0GR3R4P41KDEZG1XLW5OANJ"
 #define kCLIENTSECRET @"CTRLBHZGCDW5WYQSSOYFBZ0VGTUNMXJI1DGPHDRWV3DNCUU0"
@@ -38,10 +38,10 @@
         NSMutableArray *venues = [[NSMutableArray alloc] initWithArray:[[responseObject objectForKey:@"response"] objectForKey:@"venues"]];
         
         for (NSDictionary* venue in venues) {
-            [FourSquare saveVenueToStoreWithVenue:venue];
+            [FourSquare saveResponse:venue];
         }
-        
-        NSLog(@"response object %@", [venues firstObject]);
+
+        //NSLog(@"response object %@", [venues firstObject]);
 
     } failure:^(NSURLSessionDataTask* task, NSError* error) {
         NSLog(@"error %@", error.localizedDescription);
@@ -49,17 +49,34 @@
 }
 
 // Manual Object Mapping
-+ (void)saveResponse:(NSDictionary*)response
++ (void)saveResponse:(NSDictionary*)dictionary
 {
     CoreDataStack* coreDataStack = [CoreDataStack defaultStack];
-    Venue* venue = [NSEntityDescription insertNewObjectForEntityForName:@"Venue" inManagedObjectContext:coreDataStack.managedObjectContext];
-    Contact* contact = [NSEntityDescription insertNewObjectForEntityForName:@"Contact" inManagedObjectContext:coreDataStack.managedObjectContext];
+    UCSVenue* venue = [NSEntityDescription insertNewObjectForEntityForName:@"UCSVenue" inManagedObjectContext:coreDataStack.managedObjectContext];
 
-    [venue setName:[response objectForKey:@"name"]];
+    [FourSquare mapFromDictionary:dictionary toObject:venue];
+
+    UCSContact* contact = [NSEntityDescription insertNewObjectForEntityForName:@"UCSContact" inManagedObjectContext:coreDataStack.managedObjectContext];
     [contact setPhone:@"1111"];
     [venue setContact:contact];
 
     [coreDataStack saveContext];
+}
+
++ (void)mapFromDictionary:(NSDictionary*)dictionary toObject:(NSManagedObject*)object
+{
+    NSEntityDescription* entity = [object entity];
+    for (NSPropertyDescription* property in entity) {
+
+        if (![NSStringFromClass([property class]) isEqual:@"NSRelationshipDescription"]) {
+
+            NSString* value = [dictionary objectForKey:property.name];
+            if (value != NULL) {
+                [object setValue:value forKey:property.name];
+                //NSLog(@"value %@ name %@", value, property.name);
+            }
+        }
+    }
 }
 
 @end

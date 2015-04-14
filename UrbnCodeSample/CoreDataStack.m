@@ -108,7 +108,7 @@
 - (void)clearAll
 {
     NSFetchRequest* diaryEntries = [[NSFetchRequest alloc] init];
-    [diaryEntries setEntity:[NSEntityDescription entityForName:@"Venue" inManagedObjectContext:self.managedObjectContext]];
+    [diaryEntries setEntity:[NSEntityDescription entityForName:@"UCSVenue" inManagedObjectContext:self.managedObjectContext]];
     [diaryEntries setIncludesPropertyValues:NO]; //only fetch the managedObjectID
 
     NSError* error = nil;
