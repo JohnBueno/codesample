@@ -31,7 +31,7 @@
         @"client_id" : kCLIENTID,
         @"client_secret" : kCLIENTSECRET,
         @"v" : @"20130815",
-        @"limit" : @"10",
+        @"limit" : @"1",
         @"ll" : ll,
         @"query" : @"sushi"
     };
@@ -51,8 +51,8 @@
         
 
         for (NSDictionary* venue in venues) {
-            [FourSquare saveResponse:venue];
-            //[FourSquare processParsedObject:venue depth:0 parent:nil];
+            //[FourSquare saveResponse:venue];
+            [FourSquare processParsedObject:venue depth:0 parent:nil];
             //NSLog(@"----------");
         }
 
@@ -63,29 +63,33 @@
     }];
 }
 
-//+ (void)processParsedObject:(id)object depth:(int)depth parent:(id)parent
-//{
-//
-//    if ([object isKindOfClass:[NSDictionary class]]) {
-//
-//        for (NSString* key in [object allKeys]) {
-//            id child = [object objectForKey:key];
-//            NSLog(@"Key %@", key);
-//            NSLog(@"Child %@", child);
-//            [self processParsedObject:child depth:depth + 1 parent:object];
-//        }
-//    }
-//    else if ([object isKindOfClass:[NSArray class]]) {
-//
-//        for (id child in object) {
-//            [self processParsedObject:child depth:depth + 1 parent:object];
-//        }
-//    }
-//    else {
-//        //This object is not a container you might be interested in it's value
-//        NSLog(@"Node: %@  depth: %d", [object description], depth);
-//    }
-//}
++ (void)processParsedObject:(id)object depth:(int)depth parent:(id)parent
+{
+
+    if ([object isKindOfClass:[NSDictionary class]]) {
+
+        for (NSString* key in [object allKeys]) {
+            id child = [object objectForKey:key];
+            if ([child isKindOfClass:[NSDictionary class]] || [child isKindOfClass:[NSArray class]]) {
+                NSLog(@"Parent %@", key);
+            }
+
+            //            NSLog(@"Key %@", key);
+            //            NSLog(@"Child %@", child);
+            [self processParsedObject:child depth:depth + 1 parent:object];
+        }
+    }
+    else if ([object isKindOfClass:[NSArray class]]) {
+
+        for (id child in object) {
+            [self processParsedObject:child depth:depth + 1 parent:object];
+        }
+    }
+    else {
+        //This object is not a container you might be interested in it's value
+        //NSLog(@"Node: %@  depth: %d", [object description], depth);
+    }
+}
 
 // Manual Object Mapping
 + (void)saveResponse:(NSDictionary*)dictionary
