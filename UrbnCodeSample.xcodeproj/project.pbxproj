@@ -19,11 +19,11 @@
 		6A75A00C1ADC226D0065E91A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A75A00B1ADC226D0065E91A /* Images.xcassets */; };
 		6A75A00F1ADC226D0065E91A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A75A00D1ADC226D0065E91A /* LaunchScreen.xib */; };
 		6A75A01B1ADC226D0065E91A /* UrbnCodeSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A75A01A1ADC226D0065E91A /* UrbnCodeSampleTests.m */; };
+		6AD349581ADDE0CC009C985C /* UCSCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AD349571ADDE0CC009C985C /* UCSCategory.m */; };
 		6AE9BA4D1ADC693F00347F39 /* AFAppFourSquareClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE9BA4C1ADC693F00347F39 /* AFAppFourSquareClient.m */; };
 		6AE9BA581ADD5A8B00347F39 /* VenueTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE9BA571ADD5A8B00347F39 /* VenueTableViewController.m */; };
 		6AE9BAB41ADDCC9F00347F39 /* UCSVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE9BAB31ADDCC9F00347F39 /* UCSVenue.m */; };
 		6AE9BAB71ADDCCA000347F39 /* UCSContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE9BAB61ADDCCA000347F39 /* UCSContact.m */; };
-		6AE9BABA1ADDCCA000347F39 /* UCSCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE9BAB91ADDCCA000347F39 /* UCSCategory.m */; };
 		6AE9BABD1ADDCCA000347F39 /* UCSIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE9BABC1ADDCCA000347F39 /* UCSIcon.m */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +58,8 @@
 		6A75A0141ADC226D0065E91A /* UrbnCodeSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UrbnCodeSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A75A0191ADC226D0065E91A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A75A01A1ADC226D0065E91A /* UrbnCodeSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UrbnCodeSampleTests.m; sourceTree = "<group>"; };
+		6AD349561ADDE0CC009C985C /* UCSCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCSCategory.h; sourceTree = "<group>"; };
+		6AD349571ADDE0CC009C985C /* UCSCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCSCategory.m; sourceTree = "<group>"; };
 		6AE9BA4B1ADC693F00347F39 /* AFAppFourSquareClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAppFourSquareClient.h; sourceTree = "<group>"; };
 		6AE9BA4C1ADC693F00347F39 /* AFAppFourSquareClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFAppFourSquareClient.m; sourceTree = "<group>"; };
 		6AE9BA561ADD5A8B00347F39 /* VenueTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenueTableViewController.h; sourceTree = "<group>"; };
@@ -66,8 +68,6 @@
 		6AE9BAB31ADDCC9F00347F39 /* UCSVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCSVenue.m; sourceTree = "<group>"; };
 		6AE9BAB51ADDCCA000347F39 /* UCSContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCSContact.h; sourceTree = "<group>"; };
 		6AE9BAB61ADDCCA000347F39 /* UCSContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCSContact.m; sourceTree = "<group>"; };
-		6AE9BAB81ADDCCA000347F39 /* UCSCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCSCategory.h; sourceTree = "<group>"; };
-		6AE9BAB91ADDCCA000347F39 /* UCSCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCSCategory.m; sourceTree = "<group>"; };
 		6AE9BABB1ADDCCA000347F39 /* UCSIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCSIcon.h; sourceTree = "<group>"; };
 		6AE9BABC1ADDCCA000347F39 /* UCSIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCSIcon.m; sourceTree = "<group>"; };
 		DEBC8A174B86CE0F95598394 /* Pods-UrbnCodeSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UrbnCodeSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-UrbnCodeSample/Pods-UrbnCodeSample.release.xcconfig"; sourceTree = "<group>"; };
@@ -176,10 +176,10 @@
 		6AE9BA4E1ADC694700347F39 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6AD349561ADDE0CC009C985C /* UCSCategory.h */,
+				6AD349571ADDE0CC009C985C /* UCSCategory.m */,
 				6AE9BABB1ADDCCA000347F39 /* UCSIcon.h */,
 				6AE9BABC1ADDCCA000347F39 /* UCSIcon.m */,
-				6AE9BAB81ADDCCA000347F39 /* UCSCategory.h */,
-				6AE9BAB91ADDCCA000347F39 /* UCSCategory.m */,
 				6AE9BAB51ADDCCA000347F39 /* UCSContact.h */,
 				6AE9BAB61ADDCCA000347F39 /* UCSContact.m */,
 				6AE9BAB21ADDCC9F00347F39 /* UCSVenue.h */,
@@ -350,12 +350,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A75A0011ADC226D0065E91A /* AppDelegate.m in Sources */,
+				6AD349581ADDE0CC009C985C /* UCSCategory.m in Sources */,
 				6AE9BA4D1ADC693F00347F39 /* AFAppFourSquareClient.m in Sources */,
 				6A759FFE1ADC226D0065E91A /* main.m in Sources */,
 				6A3A412E1ADC2C5500388198 /* FourSquare.m in Sources */,
 				6AE9BAB41ADDCC9F00347F39 /* UCSVenue.m in Sources */,
 				6A75A0071ADC226D0065E91A /* ViewController.m in Sources */,
-				6AE9BABA1ADDCCA000347F39 /* UCSCategory.m in Sources */,
 				6AE9BA581ADD5A8B00347F39 /* VenueTableViewController.m in Sources */,
 				6AE9BABD1ADDCCA000347F39 /* UCSIcon.m in Sources */,
 				6A75A0041ADC226D0065E91A /* UrbnCodeSample.xcdatamodeld in Sources */,

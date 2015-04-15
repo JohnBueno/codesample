@@ -7,9 +7,6 @@
 //
 
 #import "UCSCategory.h"
-#import "UCSIcon.h"
-#import "UCSVenue.h"
-
 
 @implementation UCSCategory
 
@@ -17,7 +14,7 @@
 @dynamic pluralName;
 @dynamic primary;
 @dynamic shortName;
-@dynamic venue;
 @dynamic icon;
+@dynamic venue;
 
 @end

@@ -8,17 +8,17 @@
         <relationship name="icon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSIcon" inverseName="category" inverseEntity="UCSIcon" syncable="YES"/>
         <relationship name="venue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSVenue" inverseName="categories" inverseEntity="UCSVenue" syncable="YES"/>
     </entity>
-    <entity name="UCSContact" representedClassName="UCSContact" syncable="YES">
+    <entity name="UCSContact" representedClassName="" syncable="YES">
         <attribute name="formattedPhone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSVenue" inverseName="contact" inverseEntity="UCSVenue" syncable="YES"/>
     </entity>
-    <entity name="UCSIcon" representedClassName="UCSIcon" syncable="YES">
+    <entity name="UCSIcon" representedClassName="" syncable="YES">
         <attribute name="prefix" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSCategory" inverseName="icon" inverseEntity="UCSCategory" syncable="YES"/>
     </entity>
-    <entity name="UCSVenue" representedClassName="UCSVenue" syncable="YES">
+    <entity name="UCSVenue" representedClassName="" syncable="YES">
         <attribute name="hasMenu" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="referralId" optional="YES" attributeType="String" syncable="YES"/>
