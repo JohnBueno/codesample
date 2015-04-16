@@ -59,8 +59,8 @@
 
     UCSVenue* venue = [self.fetchedResultsController objectAtIndexPath:indexPath];
     //NSLog(@"url %@", [venue valueForKey:@"url"]);
-    NSLog(@"contact %@", venue.contact);
-    //NSLog(@"category %@", [[venue.categories allObjects] firstObject]);
+    //NSLog(@"location %@", venue.location);
+    NSLog(@"category %@", [[[venue.categories allObjects] firstObject] valueForKey:@"icon"]);
     cell.textLabel.text = venue.name;
 
     return cell;

@@ -41,17 +41,10 @@
     [[AFAppFourSquareClient sharedClient] GET:@"/v2/venues/search" parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
         NSMutableArray *venues = [[NSMutableArray alloc] initWithArray:[[responseObject objectForKey:@"response"] objectForKey:@"venues"]];
         
-        
-
         for (NSDictionary* venue in venues) {
             //NSLog(@"Venue %@", venue);
             [self saveResponse:venue];
-            //NSMutableDictionary * venueDictionary = [NSMutableDictionary dictionaryWithObject:venue forKey:@"venue"];
-            //[self processParsedObject:venue depth:0 parent:@"venue"];
-
         }
-
-        //NSLog(@"response object %@", [venues firstObject]);
 
     } failure:^(NSURLSessionDataTask* task, NSError* error) {
         NSLog(@"error %@", error.localizedDescription);
@@ -64,33 +57,10 @@
     CoreDataStack* coreDataStack = [CoreDataStack defaultStack];
     // Create Venue
     UCSVenue* venue = [NSEntityDescription insertNewObjectForEntityForName:@"UCSVenue" inManagedObjectContext:coreDataStack.managedObjectContext];
-    [venue setFourSquareId:[dictionary objectForKey:@"id"]];
+    // Set Id manually from foursquare because id is reserved
+    [venue setVenueId:[dictionary objectForKey:@"id"]];
     [self mapFromDictionary:dictionary toObject:venue];
 
-    // Create Contact
-    //    UCSContact* contact = [NSEntityDescription insertNewObjectForEntityForName:@"UCSContact" inManagedObjectContext:coreDataStack.managedObjectContext];
-    //    [self mapFromDictionary:[dictionary objectForKey:@"contact"] toObject:contact];
-    //    [venue setContact:contact];
-    //
-    //    // Create Location
-    //    UCSLocation* location = [NSEntityDescription insertNewObjectForEntityForName:@"UCSLocation" inManagedObjectContext:coreDataStack.managedObjectContext];
-    //    [self mapFromDictionary:[dictionary objectForKey:@"location"] toObject:location];
-    //    [venue setLocation:location];
-    //
-    //    // Create Location
-    //    UCSStats* stats = [NSEntityDescription insertNewObjectForEntityForName:@"UCSStats" inManagedObjectContext:coreDataStack.managedObjectContext];
-    //    [self mapFromDictionary:[dictionary objectForKey:@"stats"] toObject:stats];
-    //    [venue setStats:stats];
-    //
-    //    // Add Categories
-    //    UCSCategory* category = [NSEntityDescription insertNewObjectForEntityForName:@"UCSCategory" inManagedObjectContext:coreDataStack.managedObjectContext];
-
-    //    NSMutableSet* categoriesSet = [venue mutableSetValueForKey:@"categories"];
-    //    NSArray* categoriesArray = [dictionary objectForKey:@"categories"];
-    //    for (NSDictionary* cat in categoriesArray) {
-    //        [self mapFromDictionary:cat toObject:category];
-    //        [categoriesSet addObject:category];
-    //    }
     [coreDataStack saveContext];
 }
 
@@ -100,25 +70,42 @@
     for (NSPropertyDescription* property in entity) {
 
         if (![NSStringFromClass([property class]) isEqual:@"NSRelationshipDescription"]) {
-
-            NSString* value = [dictionary objectForKey:property.name];
+            //Map base properties
+            NSString* value = [dictionary objectForKey:[property name]];
             if (value != NULL) {
-                [object setValue:value forKey:property.name];
+                [object setValue:value forKey:[property name]];
                 //NSLog(@"value %@ name %@", value, property.name);
             }
         }
         else {
-            //TRY THIS!!!!!!!!!!!!
+            //If entity is a relationship call mapping recursively
             NSManagedObject* relationship = [self getManagedObjectNamed:[property name]];
-            [self mapFromDictionary:[dictionary objectForKey:[property name]] toObject:relationship];
-            NSLog(@"RelationShip %@", relationship);
-            [object setValue:relationship forKey:property.name];
+
+            //If this property is an array then loop through and set 1 to many relationship
+            if ([[dictionary objectForKey:[property name]] isKindOfClass:[NSArray class]]) {
+                NSLog(@"Relationship %@ Is Array", [property name]);
+
+                NSMutableSet* objectSet = [object mutableSetValueForKey:[property name]];
+                NSArray* objectArray = [dictionary objectForKey:@"categories"];
+
+                for (NSDictionary* element in objectArray) {
+                    //NSLog(@"Array Element %@", element);
+                    [self mapFromDictionary:element toObject:relationship];
+                    [objectSet addObject:relationship];
+                }
+            }
+            else {
+                [self mapFromDictionary:[dictionary objectForKey:[property name]] toObject:relationship];
+                [object setValue:relationship forKey:[property name]];
+            }
         }
     }
 }
 
+// Map JSON Objects to NSManaged Objects
 - (NSManagedObject*)getManagedObjectNamed:(NSString*)objectName
 {
+    NSLog(@"objectName %@", objectName);
     CoreDataStack* coreDataStack = [CoreDataStack defaultStack];
     UCSContact* contact = [NSEntityDescription insertNewObjectForEntityForName:@"UCSContact" inManagedObjectContext:coreDataStack.managedObjectContext];
 
@@ -126,10 +113,16 @@
 
     UCSStats* stats = [NSEntityDescription insertNewObjectForEntityForName:@"UCSStats" inManagedObjectContext:coreDataStack.managedObjectContext];
 
+    UCSCategory* category = [NSEntityDescription insertNewObjectForEntityForName:@"UCSCategory" inManagedObjectContext:coreDataStack.managedObjectContext];
+
+    UCSIcon* icon = [NSEntityDescription insertNewObjectForEntityForName:@"UCSIcon" inManagedObjectContext:coreDataStack.managedObjectContext];
+
     NSDictionary* entities = @{
         @"contact" : contact,
         @"location" : location,
-        @"stats" : stats
+        @"stats" : stats,
+        @"categories" : category,
+        @"icon" : icon
     };
 
     //REFACTOR THIS LATER
@@ -143,34 +136,5 @@
 
     return relationshipObject;
 }
-
-//- (void)processParsedObject:(id)object depth:(int)depth parent:(id)parent
-//{
-//
-//    if ([object isKindOfClass:[NSDictionary class]]) {
-//
-//        for (NSString* key in [object allKeys]) {
-//            id child = [object objectForKey:key];
-//            if ([child isKindOfClass:[NSDictionary class]] || [child isKindOfClass:[NSArray class]]) {
-//                NSLog(@"Create Object %@ and add to parent Parent %@", key, parent);
-//            }
-//            else {
-//                NSLog(@"Add key %@ Directly to parent %@", key, parent);
-//            }
-//            [self processParsedObject:child depth:depth + 1 parent:key];
-//        }
-//    }
-//    else if ([object isKindOfClass:[NSArray class]]) {
-//
-//        for (id child in object) {
-//            [self processParsedObject:child depth:depth + 1 parent:@"categories"];
-//        }
-//    }
-//    else {
-//        //This object is not a container you might be interested in it's value
-//        //NSLog(@"Node: %@  depth: %d", [object description], depth);
-//        //NSLog(@"add %@ to %@", [object description], parent);
-//    }
-//}
 
 @end
