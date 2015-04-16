@@ -10,7 +10,9 @@
 #import "FourSquare.h"
 #import <CoreLocation/CoreLocation.h>
 
-@interface ViewController () <CLLocationManagerDelegate>
+@interface ViewController () <CLLocationManagerDelegate> {
+    FourSquare* fourSquare;
+}
 
 - (IBAction)getLocationPressed:(id)sender;
 
@@ -24,12 +26,21 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"View Did load");
     [super viewDidLoad];
-    locationManager = [[CLLocationManager alloc] init];
+    fourSquare = [[FourSquare alloc] init];
+    [self getlocation];
 }
 
 - (IBAction)getLocationPressed:(id)sender
 {
+    NSLog(@"get location button");
+    [self getlocation];
+}
+
+- (void)getlocation
+{
+    locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     if ([locationManager
             respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
@@ -41,7 +52,7 @@
 
 - (IBAction)searchBtnPressed:(id)sender
 {
-    NSLog(@"test search");
+    NSLog(@"Search button Pressed");
     [self performSegueWithIdentifier:@"showResults" sender:nil];
     //[Venues testAFNetworking];
 }
@@ -51,6 +62,7 @@
 - (void)locationManager:(CLLocationManager*)manager
        didFailWithError:(NSError*)error
 {
+    // Add instructions if in simulator
     NSLog(@"Location Error %@", error);
 }
 
@@ -58,12 +70,18 @@
      didUpdateLocations:(NSArray*)locations
 {
     CLLocation* location = [locations lastObject];
-
     if (location != nil) {
         latitude = location.coordinate.latitude;
         longitude = location.coordinate.longitude;
-        FourSquare* fourSquare = [[FourSquare alloc] init];
-        [fourSquare getVenuesNearLatitude:latitude andLongitude:longitude];
+        // Convert all fourSqaure to class method
+        // Instance not needed with coredata
+        [fourSquare getVenuesNearLatitude:latitude andLongitude:longitude withBlock:^(NSError* error) {
+                    if(!error){
+                        NSLog(@"Push to list");
+                    }else{
+                        NSLog(@"error %@", error);
+                    }
+        }];
     }
 
     [locationManager stopUpdatingLocation];

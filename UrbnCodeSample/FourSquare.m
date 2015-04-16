@@ -28,6 +28,7 @@
 {
 
     [[CoreDataStack defaultStack] clearAll];
+
     NSString* ll = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
     NSDictionary* params = @{
         @"client_id" : kCLIENTID,
@@ -42,12 +43,41 @@
         NSMutableArray *venues = [[NSMutableArray alloc] initWithArray:[[responseObject objectForKey:@"response"] objectForKey:@"venues"]];
         
         for (NSDictionary* venue in venues) {
-            //NSLog(@"Venue %@", venue);
             [self saveResponse:venue];
         }
 
     } failure:^(NSURLSessionDataTask* task, NSError* error) {
         NSLog(@"error %@", error.localizedDescription);
+    }];
+}
+
+- (void)getVenuesNearLatitude:(float)latitude
+                 andLongitude:(float)longitude
+                    withBlock:(void (^)(NSError*))block
+{
+
+    [[CoreDataStack defaultStack] clearAll];
+
+    NSString* ll = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
+    NSDictionary* params = @{
+        @"client_id" : kCLIENTID,
+        @"client_secret" : kCLIENTSECRET,
+        @"v" : @"20130815",
+        @"limit" : @"10",
+        @"ll" : ll,
+        @"query" : @"sushi"
+    };
+
+    [[AFAppFourSquareClient sharedClient] GET:@"/v2/venues/search" parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
+        NSMutableArray *venues = [[NSMutableArray alloc] initWithArray:[[responseObject objectForKey:@"response"] objectForKey:@"venues"]];
+        
+        for (NSDictionary* venue in venues) {
+            [self saveResponse:venue];
+        }
+        block(nil);
+
+    } failure:^(NSURLSessionDataTask* task, NSError* error) {
+        block(error);
     }];
 }
 
@@ -74,7 +104,6 @@
             NSString* value = [dictionary objectForKey:[property name]];
             if (value != NULL) {
                 [object setValue:value forKey:[property name]];
-                //NSLog(@"value %@ name %@", value, property.name);
             }
         }
         else {
@@ -83,17 +112,16 @@
 
             //If this property is an array then loop through and set 1 to many relationship
             if ([[dictionary objectForKey:[property name]] isKindOfClass:[NSArray class]]) {
-                NSLog(@"Relationship %@ Is Array", [property name]);
 
                 NSMutableSet* objectSet = [object mutableSetValueForKey:[property name]];
                 NSArray* objectArray = [dictionary objectForKey:@"categories"];
 
                 for (NSDictionary* element in objectArray) {
-                    //NSLog(@"Array Element %@", element);
                     [self mapFromDictionary:element toObject:relationship];
                     [objectSet addObject:relationship];
                 }
             }
+            //Else property is just a dictionary no need to iterate
             else {
                 [self mapFromDictionary:[dictionary objectForKey:[property name]] toObject:relationship];
                 [object setValue:relationship forKey:[property name]];
@@ -105,7 +133,6 @@
 // Map JSON Objects to NSManaged Objects
 - (NSManagedObject*)getManagedObjectNamed:(NSString*)objectName
 {
-    NSLog(@"objectName %@", objectName);
     CoreDataStack* coreDataStack = [CoreDataStack defaultStack];
     UCSContact* contact = [NSEntityDescription insertNewObjectForEntityForName:@"UCSContact" inManagedObjectContext:coreDataStack.managedObjectContext];
 
@@ -117,6 +144,7 @@
 
     UCSIcon* icon = [NSEntityDescription insertNewObjectForEntityForName:@"UCSIcon" inManagedObjectContext:coreDataStack.managedObjectContext];
 
+    //JSON Properties and cooresponding ManagedObject instances
     NSDictionary* entities = @{
         @"contact" : contact,
         @"location" : location,
