@@ -9,26 +9,32 @@
 #import "ViewController.h"
 #import "FourSquare.h"
 #import <CoreLocation/CoreLocation.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
-@interface ViewController () <CLLocationManagerDelegate> {
-    FourSquare* fourSquare;
-}
+@interface ViewController () <CLLocationManagerDelegate>
 
 - (IBAction)getLocationPressed:(id)sender;
+- (IBAction)viewResultsBtnPressed:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel* lblAddress;
 
 @end
 
 @implementation ViewController {
     CLLocationManager* locationManager;
+    CLGeocoder* geoCoder;
+    CLPlacemark* placeMark;
     float latitude;
     float longitude;
+    FourSquare* fourSquare;
 }
+
+@synthesize lblAddress;
 
 - (void)viewDidLoad
 {
-    NSLog(@"View Did load");
     [super viewDidLoad];
     fourSquare = [[FourSquare alloc] init];
+    geoCoder = [[CLGeocoder alloc] init];
     [self getlocation];
 }
 
@@ -42,6 +48,8 @@
 {
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
+    [SVProgressHUD showWithStatus:@"Finding Location" maskType:SVProgressHUDMaskTypeGradient];
+
     if ([locationManager
             respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [locationManager requestWhenInUseAuthorization];
@@ -50,7 +58,7 @@
     [locationManager startUpdatingLocation];
 }
 
-- (IBAction)searchBtnPressed:(id)sender
+- (IBAction)viewResultsBtnPressed:(id)sender
 {
     NSLog(@"Search button Pressed");
     [self performSegueWithIdentifier:@"showResults" sender:nil];
@@ -75,16 +83,59 @@
         longitude = location.coordinate.longitude;
         // Convert all fourSqaure to class method
         // Instance not needed with coredata
+        [SVProgressHUD showWithStatus:@"Generating List" maskType:SVProgressHUDMaskTypeGradient];
         [fourSquare getVenuesNearLatitude:latitude andLongitude:longitude withBlock:^(NSError* error) {
-                    if(!error){
-                        NSLog(@"Push to list");
-                    }else{
-                        NSLog(@"error %@", error);
-                    }
+            [SVProgressHUD dismiss];
+            if(!error){
+                NSLog(@"Push to list");
+            }else{
+                NSLog(@"error %@", error);
+            }
         }];
     }
 
     [locationManager stopUpdatingLocation];
+    [self getAddressForLocation:location];
+}
+
+- (void)getAddressForLocation:(CLLocation*)location
+{
+    [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray* placemarks, NSError* error) {
+        if (!error && [placemarks count] > 0) {
+            placeMark = [placemarks lastObject];
+
+            NSMutableString *label = [NSMutableString string];
+            if (placeMark.subThoroughfare) {
+                [label appendString:[NSString stringWithFormat:@"%@ ", placeMark.subThoroughfare]];
+            }
+            
+            if (placeMark.thoroughfare) {
+                [label appendString:[NSString stringWithFormat:@"%@\n", placeMark.thoroughfare]];
+            }
+            
+            if (placeMark.postalCode) {
+                [label appendString:[NSString stringWithFormat:@"%@ ", placeMark.postalCode]];
+            }
+            
+            if (placeMark.locality) {
+                [label appendString:[NSString stringWithFormat:@"%@ ", placeMark.locality]];
+            }
+            
+            if (placeMark.administrativeArea) {
+                [label appendString:[NSString stringWithFormat:@"%@\n", placeMark.administrativeArea]];
+            }
+            
+            if (placeMark.country) {
+                [label appendString:[NSString stringWithFormat:@"%@ ", placeMark.country]];
+            }
+            
+            [lblAddress setText:label];
+            
+        }else{
+            NSLog(@"Error %@", error.debugDescription);
+        }
+
+    }];
 }
 
 @end

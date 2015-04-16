@@ -5,6 +5,7 @@ target 'UrbnCodeSample' do
 
 pod 'AFNetworking', '~> 2.5'
 pod 'AFNetworkActivityLogger', '~> 2.0'
+pod 'SVProgressHUD', :head
 
 end
 
