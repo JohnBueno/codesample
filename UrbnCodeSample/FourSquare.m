@@ -52,8 +52,9 @@
 
         for (NSDictionary* venue in venues) {
             //[FourSquare saveResponse:venue];
-            [FourSquare processParsedObject:venue depth:0 parent:nil];
-            //NSLog(@"----------");
+            NSMutableDictionary * venueDictionary = [NSMutableDictionary dictionaryWithObject:venue forKey:@"venue"];
+            [FourSquare processParsedObject:venue depth:0 parent:@"venue"];
+
         }
 
         //NSLog(@"response object %@", [venues firstObject]);
@@ -71,24 +72,39 @@
         for (NSString* key in [object allKeys]) {
             id child = [object objectForKey:key];
             if ([child isKindOfClass:[NSDictionary class]] || [child isKindOfClass:[NSArray class]]) {
-                NSLog(@"Parent %@", key);
+                NSLog(@"Create Object %@ and add to parent Parent %@", key, parent);
             }
-
-            //            NSLog(@"Key %@", key);
-            //            NSLog(@"Child %@", child);
-            [self processParsedObject:child depth:depth + 1 parent:object];
+            else {
+                NSLog(@"Add key %@ Directly to parent %@", key, parent);
+            }
+            [self processParsedObject:child depth:depth + 1 parent:key];
         }
     }
     else if ([object isKindOfClass:[NSArray class]]) {
 
         for (id child in object) {
-            [self processParsedObject:child depth:depth + 1 parent:object];
+            [self processParsedObject:child depth:depth + 1 parent:@"categories"];
         }
     }
     else {
         //This object is not a container you might be interested in it's value
         //NSLog(@"Node: %@  depth: %d", [object description], depth);
+        //NSLog(@"add %@ to %@", [object description], parent);
     }
+}
+
++ (void)saveProperty:(id)property toParentClass:(NSString*)className
+{
+
+    CoreDataStack* coreDataStack = [CoreDataStack defaultStack];
+    UCSVenue* venue = [NSEntityDescription insertNewObjectForEntityForName:@"UCSVenue" inManagedObjectContext:coreDataStack.managedObjectContext];
+    UCSContact* contact = [NSEntityDescription insertNewObjectForEntityForName:@"UCSContact" inManagedObjectContext:coreDataStack.managedObjectContext];
+    UCSCategory* category = [NSEntityDescription insertNewObjectForEntityForName:@"UCSCategory" inManagedObjectContext:coreDataStack.managedObjectContext];
+    NSDictionary* lookUpValues = @{
+        @"venue" : venue,
+        @"contact" : contact,
+        @"category" : category
+    };
 }
 
 // Manual Object Mapping
