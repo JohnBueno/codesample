@@ -33,16 +33,12 @@
 {
 
     if (offset == 0) {
-    NSLog(@"Clear Data for new");
-    [[CoreDataStack defaultStack] clearAll];
+        [[CoreDataStack defaultStack] clearAll];
     }
 
     NSString* ll = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
     NSString* offsetString = [NSString stringWithFormat:@"%d", offset];
     NSString* limitString = [NSString stringWithFormat:@"%d", limit];
-
-    NSLog(@"Limit %@", limitString);
-    NSLog(@"Offset %@", offsetString);
 
     NSDictionary* params = @{
         @"client_id" : kCLIENTID,
@@ -63,11 +59,9 @@
         //Response if explore
         NSArray *items = [[responseObject objectForKey:@"response"] objectForKey:@"groups"];
         NSArray *exploreArray =[[items firstObject] objectForKey:@"items"];
-        //NSLog(@"items %@", [[items firstObject] objectForKey:@"items"]);
         
         for (NSDictionary* item in exploreArray) {
-            //NSLog(@"Venue %@", [item objectForKey:@"venue"]);
-            //[self saveResponse:venue];
+            NSLog(@"Venue %@", [[item objectForKey:@"venue"] objectForKey:@"featuredPhotos"]);
             [self saveResponse:[item objectForKey:@"venue"]];
         }
         block(nil);

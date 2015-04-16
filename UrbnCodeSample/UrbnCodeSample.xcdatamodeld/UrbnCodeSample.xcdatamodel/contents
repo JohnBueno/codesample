@@ -26,6 +26,20 @@
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="venue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSVenue" inverseName="location" inverseEntity="UCSVenue" syncable="YES"/>
     </entity>
+    <entity name="UCSPhoto" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="height" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="photoID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prefix" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="width" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="photos" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSPhotos" inverseName="photo" inverseEntity="UCSPhotos" syncable="YES"/>
+    </entity>
+    <entity name="UCSPhotos" syncable="YES">
+        <attribute name="count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="photo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UCSPhoto" inverseName="photos" inverseEntity="UCSPhoto" syncable="YES"/>
+        <relationship name="venue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSVenue" inverseName="photos" inverseEntity="UCSVenue" syncable="YES"/>
+    </entity>
     <entity name="UCSStats" representedClassName="UCSStats" syncable="YES">
         <attribute name="checkinsCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="tipCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -42,14 +56,17 @@
         <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UCSCategory" inverseName="venue" inverseEntity="UCSCategory" syncable="YES"/>
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSContact" inverseName="venue" inverseEntity="UCSContact" syncable="YES"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSLocation" inverseName="venue" inverseEntity="UCSLocation" syncable="YES"/>
+        <relationship name="photos" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSPhotos" inverseName="venue" inverseEntity="UCSPhotos" syncable="YES"/>
         <relationship name="stats" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSStats" inverseName="venue" inverseEntity="UCSStats" syncable="YES"/>
     </entity>
     <elements>
         <element name="UCSCategory" positionX="-117" positionY="72" width="128" height="135"/>
         <element name="UCSContact" positionX="-45" positionY="27" width="128" height="90"/>
         <element name="UCSIcon" positionX="-99" positionY="126" width="128" height="90"/>
-        <element name="UCSVenue" positionX="-263" positionY="-18" width="128" height="195"/>
         <element name="UCSLocation" positionX="-153" positionY="81" width="128" height="135"/>
         <element name="UCSStats" positionX="-144" positionY="90" width="128" height="105"/>
+        <element name="UCSVenue" positionX="-263" positionY="-18" width="128" height="210"/>
+        <element name="UCSPhotos" positionX="-153" positionY="81" width="128" height="90"/>
+        <element name="UCSPhoto" positionX="-144" positionY="90" width="128" height="150"/>
     </elements>
 </model>

@@ -112,7 +112,6 @@
 - (NSString*)imageFromPrefix:(NSString*)prefix andSuffix:(NSString*)suffix
 {
     NSString* urlString = [NSString stringWithFormat:@"%@bg_64%@", prefix, suffix];
-    NSLog(@"url string %@", urlString);
     return urlString;
 }
 
