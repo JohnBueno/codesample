@@ -18,6 +18,7 @@
 - (void)getVenuesNearLatitude:(float)latitude
                  andLongitude:(float)longitude
                     andOffset:(int)offset
+                     andLimit:(int)limit
                     withBlock:(void (^)(NSError*))block;
 
 - (void)saveResponse:(NSDictionary*)dictionary;

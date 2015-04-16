@@ -28,28 +28,45 @@
 - (void)getVenuesNearLatitude:(float)latitude
                  andLongitude:(float)longitude
                     andOffset:(int)offset
+                     andLimit:(int)limit
                     withBlock:(void (^)(NSError*))block
 {
 
+    //if (offset == 0) {
+    NSLog(@"Clear Data for new");
     [[CoreDataStack defaultStack] clearAll];
+    //}
 
     NSString* ll = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
     NSString* offsetString = [NSString stringWithFormat:@"%d", offset];
+    NSString* limitString = [NSString stringWithFormat:@"%d", limit];
+    NSLog(@"Limit %@", limitString);
+    NSLog(@"Offset %@", offsetString);
     NSDictionary* params = @{
         @"client_id" : kCLIENTID,
         @"client_secret" : kCLIENTSECRET,
         @"v" : @"20130815",
-        @"limit" : @"20",
-        @"offset" : offsetString,
+        @"limit" : limitString,
+        @"offset" : @"0",
+        @"venuePhotos" : @"1",
+        @"sortByDistance" : @"1",
         @"ll" : ll,
         @"query" : @"sushi"
     };
 
-    [[AFAppFourSquareClient sharedClient] GET:@"/v2/venues/search" parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
-        NSMutableArray *venues = [[NSMutableArray alloc] initWithArray:[[responseObject objectForKey:@"response"] objectForKey:@"venues"]];
+    [[AFAppFourSquareClient sharedClient] GET:@"/v2/venues/explore" parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
+        //Response if Search
+        //NSMutableArray *venues = [[NSMutableArray alloc] initWithArray:[[responseObject objectForKey:@"response"] objectForKey:@"venues"]];
         
-        for (NSDictionary* venue in venues) {
-            [self saveResponse:venue];
+        //Response if explore
+        NSArray *items = [[responseObject objectForKey:@"response"] objectForKey:@"groups"];
+        NSArray *exploreArray =[[items firstObject] objectForKey:@"items"];
+        //NSLog(@"items %@", [[items firstObject] objectForKey:@"items"]);
+        
+        for (NSDictionary* item in exploreArray) {
+            //NSLog(@"Venue %@", [item objectForKey:@"venue"]);
+            //[self saveResponse:venue];
+            [self saveResponse:[item objectForKey:@"venue"]];
         }
         block(nil);
 

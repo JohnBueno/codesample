@@ -9,13 +9,17 @@
 #import "VenueTableViewController.h"
 #import "CoreDataStack.h"
 #import "UCSVenue.h"
+#import "UCSLocation.h"
 #import "UCSContact.h"
-#import "UIScrollView+SVInfiniteScrolling.h"
 #import "FourSquare.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
-@interface VenueTableViewController () <NSFetchedResultsControllerDelegate>
+@interface VenueTableViewController () <NSFetchedResultsControllerDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
+
+@property int limit;
+@property int offset;
 
 @end
 
@@ -23,12 +27,15 @@
 
 @synthesize latitude;
 @synthesize longitude;
+@synthesize offset;
+@synthesize limit;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     [self.fetchedResultsController performFetch:nil];
+    limit = 10;
+    offset = 10;
 
     // load more content when scroll to the bottom most
     __weak typeof(self) weakSelf = self;
@@ -38,7 +45,8 @@
         FourSquare *fourSquare = [[FourSquare alloc] init];
         [fourSquare getVenuesNearLatitude:weakSelf.latitude
                              andLongitude:weakSelf.longitude
-                                andOffset:21
+                                andOffset:10
+                                 andLimit:10
                                 withBlock:^(NSError *error) {
                                     
                                     if (!error) {
@@ -47,15 +55,9 @@
                                         NSLog(@"Error %@", error);
                                     }
                                     weakSelf.tableView.showsInfiniteScrolling = NO;
-        }];
+                                }];
 
     }];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
@@ -81,6 +83,7 @@
     UCSVenue* venue = [self.fetchedResultsController objectAtIndexPath:indexPath];
     //NSLog(@"url %@", [venue valueForKey:@"url"]);
     //NSLog(@"location %@", venue.location);
+    //NSLog(@"Name %@", venue.name);
     //NSLog(@"category %@", [[[venue.categories allObjects] firstObject] valueForKey:@"icon"]);
     cell.textLabel.text = venue.name;
 
@@ -93,7 +96,7 @@
 {
     NSFetchRequest* fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"UCSVenue"];
 
-    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:NO] ];
+    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"location.distance" ascending:YES] ];
 
     return fetchRequest;
 }

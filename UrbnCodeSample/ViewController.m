@@ -104,6 +104,7 @@
         [fourSquare getVenuesNearLatitude:latitude
                              andLongitude:longitude
                                 andOffset:0
+                                 andLimit:10
                                 withBlock:^(NSError* error) {
                                     
                                     [SVProgressHUD dismiss];
