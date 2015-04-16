@@ -11,6 +11,6 @@
 @interface FourSquare : NSObject
 @property (strong, nonatomic) NSDictionary* objectMap;
 
-+ (void)getVenuesNearLatitude:(float)latitude andLongitude:(float)longitude;
-+ (void)saveResponse:(NSDictionary*)dictionary;
+- (void)getVenuesNearLatitude:(float)latitude andLongitude:(float)longitude;
+- (void)saveResponse:(NSDictionary*)dictionary;
 @end

@@ -62,7 +62,8 @@
     if (location != nil) {
         latitude = location.coordinate.latitude;
         longitude = location.coordinate.longitude;
-        [FourSquare getVenuesNearLatitude:latitude andLongitude:longitude];
+        FourSquare* fourSquare = [[FourSquare alloc] init];
+        [fourSquare getVenuesNearLatitude:latitude andLongitude:longitude];
     }
 
     [locationManager stopUpdatingLocation];

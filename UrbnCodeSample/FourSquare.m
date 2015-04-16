@@ -22,7 +22,7 @@
 
 @implementation FourSquare
 @synthesize objectMap;
-+ (void)getVenuesNearLatitude:(float)latitude andLongitude:(float)longitude
+- (void)getVenuesNearLatitude:(float)latitude andLongitude:(float)longitude
 {
 
     [[CoreDataStack defaultStack] clearAll];
@@ -31,19 +31,10 @@
         @"client_id" : kCLIENTID,
         @"client_secret" : kCLIENTSECRET,
         @"v" : @"20130815",
-        @"limit" : @"1",
+        @"limit" : @"10",
         @"ll" : ll,
         @"query" : @"sushi"
     };
-
-    //    self.objectMap = @{
-    //        @"client_id" : kCLIENTID,
-    //        @"client_secret" : kCLIENTSECRET,
-    //        @"v" : @"20130815",
-    //        @"limit" : @"10",
-    //        @"ll" : ll,
-    //        @"query" : @"sushi"
-    //    };
 
     [[AFAppFourSquareClient sharedClient] GET:@"/v2/venues/search" parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
         NSMutableArray *venues = [[NSMutableArray alloc] initWithArray:[[responseObject objectForKey:@"response"] objectForKey:@"venues"]];
@@ -51,9 +42,9 @@
         
 
         for (NSDictionary* venue in venues) {
-            //[FourSquare saveResponse:venue];
-            NSMutableDictionary * venueDictionary = [NSMutableDictionary dictionaryWithObject:venue forKey:@"venue"];
-            [FourSquare processParsedObject:venue depth:0 parent:@"venue"];
+            [self saveResponse:venue];
+            //NSMutableDictionary * venueDictionary = [NSMutableDictionary dictionaryWithObject:venue forKey:@"venue"];
+            //[self processParsedObject:venue depth:0 parent:@"venue"];
 
         }
 
@@ -64,7 +55,7 @@
     }];
 }
 
-+ (void)processParsedObject:(id)object depth:(int)depth parent:(id)parent
+- (void)processParsedObject:(id)object depth:(int)depth parent:(id)parent
 {
 
     if ([object isKindOfClass:[NSDictionary class]]) {
@@ -93,31 +84,31 @@
     }
 }
 
-+ (void)saveProperty:(id)property toParentClass:(NSString*)className
-{
-
-    CoreDataStack* coreDataStack = [CoreDataStack defaultStack];
-    UCSVenue* venue = [NSEntityDescription insertNewObjectForEntityForName:@"UCSVenue" inManagedObjectContext:coreDataStack.managedObjectContext];
-    UCSContact* contact = [NSEntityDescription insertNewObjectForEntityForName:@"UCSContact" inManagedObjectContext:coreDataStack.managedObjectContext];
-    UCSCategory* category = [NSEntityDescription insertNewObjectForEntityForName:@"UCSCategory" inManagedObjectContext:coreDataStack.managedObjectContext];
-    NSDictionary* lookUpValues = @{
-        @"venue" : venue,
-        @"contact" : contact,
-        @"category" : category
-    };
-}
+//- (void)saveProperty:(id)property toParentClass:(NSString*)className
+//{
+//
+//    CoreDataStack* coreDataStack = [CoreDataStack defaultStack];
+//    UCSVenue* venue = [NSEntityDescription insertNewObjectForEntityForName:@"UCSVenue" inManagedObjectContext:coreDataStack.managedObjectContext];
+//    UCSContact* contact = [NSEntityDescription insertNewObjectForEntityForName:@"UCSContact" inManagedObjectContext:coreDataStack.managedObjectContext];
+//    UCSCategory* category = [NSEntityDescription insertNewObjectForEntityForName:@"UCSCategory" inManagedObjectContext:coreDataStack.managedObjectContext];
+//    NSDictionary* lookUpValues = @{
+//        @"venue" : venue,
+//        @"contact" : contact,
+//        @"category" : category
+//    };
+//}
 
 // Manual Object Mapping
-+ (void)saveResponse:(NSDictionary*)dictionary
+- (void)saveResponse:(NSDictionary*)dictionary
 {
     CoreDataStack* coreDataStack = [CoreDataStack defaultStack];
     // Create Venue
     UCSVenue* venue = [NSEntityDescription insertNewObjectForEntityForName:@"UCSVenue" inManagedObjectContext:coreDataStack.managedObjectContext];
-    [FourSquare mapFromDictionary:dictionary toObject:venue];
+    [self mapFromDictionary:dictionary toObject:venue];
 
     // Create Contact
     UCSContact* contact = [NSEntityDescription insertNewObjectForEntityForName:@"UCSContact" inManagedObjectContext:coreDataStack.managedObjectContext];
-    [FourSquare mapFromDictionary:[dictionary objectForKey:@"contact"] toObject:contact];
+    [self mapFromDictionary:[dictionary objectForKey:@"contact"] toObject:contact];
     [venue setContact:contact];
 
     // Add Categories
@@ -126,13 +117,13 @@
     NSMutableSet* categoriesSet = [venue mutableSetValueForKey:@"categories"];
     NSArray* categoriesArray = [dictionary objectForKey:@"categories"];
     for (NSDictionary* cat in categoriesArray) {
-        [FourSquare mapFromDictionary:cat toObject:category];
+        [self mapFromDictionary:cat toObject:category];
         [categoriesSet addObject:category];
     }
     [coreDataStack saveContext];
 }
 
-+ (void)mapFromDictionary:(NSDictionary*)dictionary toObject:(NSManagedObject*)object
+- (void)mapFromDictionary:(NSDictionary*)dictionary toObject:(NSManagedObject*)object
 {
     NSEntityDescription* entity = [object entity];
     for (NSPropertyDescription* property in entity) {
