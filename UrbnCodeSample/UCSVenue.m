@@ -14,7 +14,7 @@
 
 @implementation UCSVenue
 
-@dynamic fourSquareId;
+@dynamic venueId;
 @dynamic hasMenu;
 @dynamic name;
 @dynamic referralId;

@@ -15,7 +15,7 @@
 
 @property (nonatomic) int16_t hasMenu;
 @property (nonatomic, retain) NSString* name;
-@property (nonatomic, retain) NSString* fourSquareId;
+@property (nonatomic, retain) NSString* venueId;
 @property (nonatomic, retain) NSString* referralId;
 @property (nonatomic, retain) NSString* url;
 @property (nonatomic) BOOL verified;

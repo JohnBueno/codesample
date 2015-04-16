@@ -33,11 +33,11 @@
         <relationship name="venue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSVenue" inverseName="stats" inverseEntity="UCSVenue" syncable="YES"/>
     </entity>
     <entity name="UCSVenue" representedClassName="UCSVenue" syncable="YES">
-        <attribute name="fourSquareId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="hasMenu" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="referralId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="venueId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="verified" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UCSCategory" inverseName="venue" inverseEntity="UCSCategory" syncable="YES"/>
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSContact" inverseName="venue" inverseEntity="UCSContact" syncable="YES"/>
