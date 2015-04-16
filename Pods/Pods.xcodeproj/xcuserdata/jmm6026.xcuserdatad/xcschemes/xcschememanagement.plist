@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-UrbnCodeSample-SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-UrbnCodeSample-SVProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,27 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>08F1BFDB95F6E096B7DD3034</key>
+		<key>4BF12DEFDEC26DF9F926E087</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>45025689ADA9D74936B66F7A</key>
+		<key>823ED9C2057ACBC176FD11F9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>705443FCC7AA86FB3AF55C12</key>
+		<key>9FF13A6CE0B21C2816F880D9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D2DFD65397F136B8D0BF636E</key>
+		<key>BA6C94F52401D6EB59E0C566</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EE254E960371012AC13AD88E</key>
+		<key>DF2D79B1AD01823412C2644F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E69CBA9AC75321DB0131564B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

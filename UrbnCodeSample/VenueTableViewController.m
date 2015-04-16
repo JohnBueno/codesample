@@ -9,9 +9,11 @@
 #import "VenueTableViewController.h"
 #import "CoreDataStack.h"
 #import "UCSVenue.h"
+#import "UCSIcon.h"
 #import "UCSLocation.h"
 #import "UCSContact.h"
 #import "FourSquare.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "UIScrollView+SVInfiniteScrolling.h"
 
 @interface VenueTableViewController () <NSFetchedResultsControllerDelegate, UIScrollViewDelegate>
@@ -59,9 +61,8 @@
                                     }else{
                                         NSLog(@"Error %@", error);
                                     }
+                                    
                                     [weakSelf.tableView.infiniteScrollingView stopAnimating];
-                                    //weakSelf.tableView.showsInfiniteScrolling = NO;
-                                    //[weakSelf.tableView.infiniteScrollingView performSelector:@selector(stopAnimating) withObject:nil];
                                 }];
 
     }];
@@ -88,13 +89,31 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
     UCSVenue* venue = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    //    NSLog(@"url %@", [venue valueForKey:@"url"]);
-    //    NSLog(@"location %@", venue.location);
-    //    NSLog(@"Name %@", venue.name);
-    //    NSLog(@"category %@", [[[venue.categories allObjects] firstObject] valueForKey:@"icon"]);
-    cell.textLabel.text = venue.name;
+
+    //Set image
+    UIImageView* imageView = (UIImageView*)[cell viewWithTag:100];
+    NSDictionary* icon = [[[venue.categories allObjects] firstObject] valueForKey:@"icon"];
+    NSString* urlString = [self imageFromPrefix:[icon valueForKey:@"prefix"] andSuffix:[icon valueForKey:@"suffix"]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:urlString]
+                 placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+
+    //Set venue label
+    UILabel* nameLabel = (UILabel*)[cell viewWithTag:101];
+    nameLabel.text = venue.name;
+
+    UILabel* distanceLabel = (UILabel*)[cell viewWithTag:102];
+    float distanceMiles = venue.location.distance * 0.000621371;
+    distanceLabel.text = [NSString stringWithFormat:@"Distance: %1.1f miles", distanceMiles];
 
     return cell;
+}
+
+//Builds image urlstring
+- (NSString*)imageFromPrefix:(NSString*)prefix andSuffix:(NSString*)suffix
+{
+    NSString* urlString = [NSString stringWithFormat:@"%@bg_64%@", prefix, suffix];
+    NSLog(@"url string %@", urlString);
+    return urlString;
 }
 
 #pragma mark - Fetch CoreData
