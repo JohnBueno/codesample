@@ -58,9 +58,9 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
     UCSVenue* venue = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    NSLog(@"url %@", [venue valueForKey:@"url"]);
-    NSLog(@"contact %@", [venue.contact valueForKey:@"phone"]);
-    NSLog(@"category %@", [[venue.categories allObjects] firstObject]);
+    //NSLog(@"url %@", [venue valueForKey:@"url"]);
+    NSLog(@"contact %@", venue.contact);
+    //NSLog(@"category %@", [[venue.categories allObjects] firstObject]);
     cell.textLabel.text = venue.name;
 
     return cell;

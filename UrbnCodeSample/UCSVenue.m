@@ -2,23 +2,27 @@
 //  UCSVenue.m
 //  UrbnCodeSample
 //
-//  Created by John McCartney on 4/14/15.
+//  Created by John McCartney on 4/15/15.
 //  Copyright (c) 2015 John McCartney. All rights reserved.
 //
 
 #import "UCSVenue.h"
 #import "UCSCategory.h"
 #import "UCSContact.h"
-
+#import "UCSLocation.h"
+#import "UCSStats.h"
 
 @implementation UCSVenue
 
-@dynamic name;
-@dynamic url;
+@dynamic fourSquareId;
 @dynamic hasMenu;
+@dynamic name;
 @dynamic referralId;
+@dynamic url;
 @dynamic verified;
-@dynamic contact;
 @dynamic categories;
+@dynamic contact;
+@dynamic location;
+@dynamic stats;
 
 @end

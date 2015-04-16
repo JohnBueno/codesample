@@ -1,17 +1,20 @@
 //
-//  UCSContact.m
+//  UCSLocation.m
 //  UrbnCodeSample
 //
 //  Created by John McCartney on 4/15/15.
 //  Copyright (c) 2015 John McCartney. All rights reserved.
 //
 
-#import "UCSContact.h"
+#import "UCSLocation.h"
 
-@implementation UCSContact
+@implementation UCSLocation
 
-@dynamic formattedPhone;
-@dynamic phone;
+@dynamic cc;
+@dynamic city;
+@dynamic country;
+@dynamic distance;
+@dynamic state;
 @dynamic venue;
 
 @end
