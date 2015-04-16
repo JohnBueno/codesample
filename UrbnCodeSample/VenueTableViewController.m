@@ -10,6 +10,8 @@
 #import "CoreDataStack.h"
 #import "UCSVenue.h"
 #import "UCSContact.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
+#import "FourSquare.h"
 
 @interface VenueTableViewController () <NSFetchedResultsControllerDelegate>
 
@@ -19,16 +21,35 @@
 
 @implementation VenueTableViewController
 
+@synthesize latitude;
+@synthesize longitude;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self.fetchedResultsController performFetch:nil];
+
+    // load more content when scroll to the bottom most
+    __weak typeof(self) weakSelf = self;
+
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        
+        FourSquare *fourSquare = [[FourSquare alloc] init];
+        [fourSquare getVenuesNearLatitude:weakSelf.latitude
+                             andLongitude:weakSelf.longitude
+                                andOffset:21
+                                withBlock:^(NSError *error) {
+                                    
+                                    if (!error) {
+                                        [weakSelf.fetchedResultsController performFetch:nil];
+                                    }else{
+                                        NSLog(@"Error %@", error);
+                                    }
+                                    weakSelf.tableView.showsInfiniteScrolling = NO;
+        }];
+
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -95,6 +116,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController*)controller
 {
+    NSLog(@"Did change data");
     [self.tableView reloadData];
 }
 

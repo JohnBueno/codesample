@@ -24,46 +24,23 @@
 
 @implementation FourSquare
 @synthesize objectMap;
-- (void)getVenuesNearLatitude:(float)latitude andLongitude:(float)longitude
-{
-
-    [[CoreDataStack defaultStack] clearAll];
-
-    NSString* ll = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
-    NSDictionary* params = @{
-        @"client_id" : kCLIENTID,
-        @"client_secret" : kCLIENTSECRET,
-        @"v" : @"20130815",
-        @"limit" : @"10",
-        @"ll" : ll,
-        @"query" : @"sushi"
-    };
-
-    [[AFAppFourSquareClient sharedClient] GET:@"/v2/venues/search" parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
-        NSMutableArray *venues = [[NSMutableArray alloc] initWithArray:[[responseObject objectForKey:@"response"] objectForKey:@"venues"]];
-        
-        for (NSDictionary* venue in venues) {
-            [self saveResponse:venue];
-        }
-
-    } failure:^(NSURLSessionDataTask* task, NSError* error) {
-        NSLog(@"error %@", error.localizedDescription);
-    }];
-}
 
 - (void)getVenuesNearLatitude:(float)latitude
                  andLongitude:(float)longitude
+                    andOffset:(int)offset
                     withBlock:(void (^)(NSError*))block
 {
 
     [[CoreDataStack defaultStack] clearAll];
 
     NSString* ll = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
+    NSString* offsetString = [NSString stringWithFormat:@"%d", offset];
     NSDictionary* params = @{
         @"client_id" : kCLIENTID,
         @"client_secret" : kCLIENTSECRET,
         @"v" : @"20130815",
-        @"limit" : @"10",
+        @"limit" : @"20",
+        @"offset" : offsetString,
         @"ll" : ll,
         @"query" : @"sushi"
     };

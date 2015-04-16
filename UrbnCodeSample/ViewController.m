@@ -7,15 +7,17 @@
 //
 
 #import "ViewController.h"
+#import "VenueTableViewController.h"
 #import "FourSquare.h"
 #import <CoreLocation/CoreLocation.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 
 @interface ViewController () <CLLocationManagerDelegate>
 
+@property (strong, nonatomic) IBOutlet UILabel* lblAddress;
+
 - (IBAction)getLocationPressed:(id)sender;
 - (IBAction)viewResultsBtnPressed:(id)sender;
-@property (strong, nonatomic) IBOutlet UILabel* lblAddress;
 
 @end
 
@@ -25,6 +27,7 @@
     CLPlacemark* placeMark;
     float latitude;
     float longitude;
+    BOOL didFindLocation;
     FourSquare* fourSquare;
 }
 
@@ -46,6 +49,7 @@
 
 - (void)getlocation
 {
+    didFindLocation = NO;
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     [SVProgressHUD showWithStatus:@"Finding Location" maskType:SVProgressHUDMaskTypeGradient];
@@ -65,6 +69,16 @@
     //[Venues testAFNetworking];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
+{
+    // Make sure your segue name in storyboard is the same as this line
+    if ([[segue identifier] isEqualToString:@"showResults"]) {
+        VenueTableViewController* venueTableViewController = [segue destinationViewController];
+        venueTableViewController.latitude = latitude;
+        venueTableViewController.longitude = longitude;
+    }
+}
+
 #pragma mark CLLocationManagerDelegate Methods
 
 - (void)locationManager:(CLLocationManager*)manager
@@ -78,23 +92,29 @@
      didUpdateLocations:(NSArray*)locations
 {
     CLLocation* location = [locations lastObject];
-    if (location != nil) {
+
+    if (location != nil && !didFindLocation) {
+        [locationManager stopUpdatingLocation];
+        didFindLocation = YES;
         latitude = location.coordinate.latitude;
         longitude = location.coordinate.longitude;
         // Convert all fourSqaure to class method
         // Instance not needed with coredata
         [SVProgressHUD showWithStatus:@"Generating List" maskType:SVProgressHUDMaskTypeGradient];
-        [fourSquare getVenuesNearLatitude:latitude andLongitude:longitude withBlock:^(NSError* error) {
-            [SVProgressHUD dismiss];
-            if(!error){
-                NSLog(@"Push to list");
-            }else{
-                NSLog(@"error %@", error);
-            }
-        }];
-    }
+        [fourSquare getVenuesNearLatitude:latitude
+                             andLongitude:longitude
+                                andOffset:0
+                                withBlock:^(NSError* error) {
+                                    
+                                    [SVProgressHUD dismiss];
+                                    if(!error){
+                                        NSLog(@"Push to list");
+                                    }else{
+                                        NSLog(@"error %@", error);
+                                    }
 
-    [locationManager stopUpdatingLocation];
+                                }];
+    }
     [self getAddressForLocation:location];
 }
 

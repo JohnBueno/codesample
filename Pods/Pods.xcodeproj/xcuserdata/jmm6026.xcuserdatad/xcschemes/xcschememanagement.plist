@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-UrbnCodeSample-SVPullToRefresh.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-UrbnCodeSample.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,22 +32,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0C142BBED2AD528EBCBA9911</key>
+		<key>536DAE6ED9703A72FBF37F23</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>12F2503F6F95D39779227B40</key>
+		<key>A8E8D74B4F5EBB9F4E3C34B2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4B60702DFC283D98F6F1449D</key>
+		<key>C75F9AA516C87066E493F999</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7B174517BBB86D04ABC98B8E</key>
+		<key>D3F288164975A56DFC1628CC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EFCDE1C79EF6EEF10A31660D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
