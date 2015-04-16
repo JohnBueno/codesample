@@ -11,6 +11,15 @@
 @interface FourSquare : NSObject
 @property (strong, nonatomic) NSDictionary* objectMap;
 
-- (void)getVenuesNearLatitude:(float)latitude andLongitude:(float)longitude;
+/**
+ Block function that returns a list of venues from Foursquare
+ @return void
+*/
+- (void)getVenuesNearLatitude:(float)latitude
+                 andLongitude:(float)longitude
+                    andOffset:(int)offset
+                     andLimit:(int)limit
+                    withBlock:(void (^)(NSError*))block;
+
 - (void)saveResponse:(NSDictionary*)dictionary;
 @end

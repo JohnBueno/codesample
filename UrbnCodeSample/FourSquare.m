@@ -24,30 +24,56 @@
 
 @implementation FourSquare
 @synthesize objectMap;
-- (void)getVenuesNearLatitude:(float)latitude andLongitude:(float)longitude
+
+- (void)getVenuesNearLatitude:(float)latitude
+                 andLongitude:(float)longitude
+                    andOffset:(int)offset
+                     andLimit:(int)limit
+                    withBlock:(void (^)(NSError*))block
 {
 
+    if (offset == 0) {
+    NSLog(@"Clear Data for new");
     [[CoreDataStack defaultStack] clearAll];
+    }
+
     NSString* ll = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
+    NSString* offsetString = [NSString stringWithFormat:@"%d", offset];
+    NSString* limitString = [NSString stringWithFormat:@"%d", limit];
+
+    NSLog(@"Limit %@", limitString);
+    NSLog(@"Offset %@", offsetString);
+
     NSDictionary* params = @{
         @"client_id" : kCLIENTID,
         @"client_secret" : kCLIENTSECRET,
         @"v" : @"20130815",
-        @"limit" : @"10",
+        @"limit" : limitString,
+        @"offset" : offsetString,
+        @"venuePhotos" : @"1",
+        @"sortByDistance" : @"1",
         @"ll" : ll,
         @"query" : @"sushi"
     };
 
-    [[AFAppFourSquareClient sharedClient] GET:@"/v2/venues/search" parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
-        NSMutableArray *venues = [[NSMutableArray alloc] initWithArray:[[responseObject objectForKey:@"response"] objectForKey:@"venues"]];
+    [[AFAppFourSquareClient sharedClient] GET:@"/v2/venues/explore" parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
+        //Response if Search
+        //NSMutableArray *venues = [[NSMutableArray alloc] initWithArray:[[responseObject objectForKey:@"response"] objectForKey:@"venues"]];
         
-        for (NSDictionary* venue in venues) {
-            //NSLog(@"Venue %@", venue);
-            [self saveResponse:venue];
+        //Response if explore
+        NSArray *items = [[responseObject objectForKey:@"response"] objectForKey:@"groups"];
+        NSArray *exploreArray =[[items firstObject] objectForKey:@"items"];
+        //NSLog(@"items %@", [[items firstObject] objectForKey:@"items"]);
+        
+        for (NSDictionary* item in exploreArray) {
+            //NSLog(@"Venue %@", [item objectForKey:@"venue"]);
+            //[self saveResponse:venue];
+            [self saveResponse:[item objectForKey:@"venue"]];
         }
+        block(nil);
 
     } failure:^(NSURLSessionDataTask* task, NSError* error) {
-        NSLog(@"error %@", error.localizedDescription);
+        block(error);
     }];
 }
 
@@ -74,7 +100,6 @@
             NSString* value = [dictionary objectForKey:[property name]];
             if (value != NULL) {
                 [object setValue:value forKey:[property name]];
-                //NSLog(@"value %@ name %@", value, property.name);
             }
         }
         else {
@@ -83,17 +108,16 @@
 
             //If this property is an array then loop through and set 1 to many relationship
             if ([[dictionary objectForKey:[property name]] isKindOfClass:[NSArray class]]) {
-                NSLog(@"Relationship %@ Is Array", [property name]);
 
                 NSMutableSet* objectSet = [object mutableSetValueForKey:[property name]];
                 NSArray* objectArray = [dictionary objectForKey:@"categories"];
 
                 for (NSDictionary* element in objectArray) {
-                    //NSLog(@"Array Element %@", element);
                     [self mapFromDictionary:element toObject:relationship];
                     [objectSet addObject:relationship];
                 }
             }
+            //Else property is just a dictionary no need to iterate
             else {
                 [self mapFromDictionary:[dictionary objectForKey:[property name]] toObject:relationship];
                 [object setValue:relationship forKey:[property name]];
@@ -105,7 +129,6 @@
 // Map JSON Objects to NSManaged Objects
 - (NSManagedObject*)getManagedObjectNamed:(NSString*)objectName
 {
-    NSLog(@"objectName %@", objectName);
     CoreDataStack* coreDataStack = [CoreDataStack defaultStack];
     UCSContact* contact = [NSEntityDescription insertNewObjectForEntityForName:@"UCSContact" inManagedObjectContext:coreDataStack.managedObjectContext];
 
@@ -117,6 +140,7 @@
 
     UCSIcon* icon = [NSEntityDescription insertNewObjectForEntityForName:@"UCSIcon" inManagedObjectContext:coreDataStack.managedObjectContext];
 
+    //JSON Properties and cooresponding ManagedObject instances
     NSDictionary* entities = @{
         @"contact" : contact,
         @"location" : location,

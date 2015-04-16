@@ -10,4 +10,8 @@
 
 @interface VenueTableViewController : UITableViewController
 
+@property float latitude;
+@property float longitude;
+@property (strong, nonatomic) NSString* queryString;
+
 @end

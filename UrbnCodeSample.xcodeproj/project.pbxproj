@@ -25,6 +25,8 @@
 		6A75A00C1ADC226D0065E91A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A75A00B1ADC226D0065E91A /* Images.xcassets */; };
 		6A75A00F1ADC226D0065E91A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A75A00D1ADC226D0065E91A /* LaunchScreen.xib */; };
 		6A75A01B1ADC226D0065E91A /* UrbnCodeSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A75A01A1ADC226D0065E91A /* UrbnCodeSampleTests.m */; };
+		6AA186241AE06D8700EBB7ED /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 6AA186221AE06D8700EBB7ED /* placeholder.png */; };
+		6AA186251AE06D8700EBB7ED /* placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6AA186231AE06D8700EBB7ED /* placeholder@2x.png */; };
 		6AE9BA4D1ADC693F00347F39 /* AFAppFourSquareClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE9BA4C1ADC693F00347F39 /* AFAppFourSquareClient.m */; };
 		6AE9BA581ADD5A8B00347F39 /* VenueTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE9BA571ADD5A8B00347F39 /* VenueTableViewController.m */; };
 /* End PBXBuildFile section */
@@ -72,6 +74,8 @@
 		6A75A0141ADC226D0065E91A /* UrbnCodeSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UrbnCodeSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A75A0191ADC226D0065E91A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A75A01A1ADC226D0065E91A /* UrbnCodeSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UrbnCodeSampleTests.m; sourceTree = "<group>"; };
+		6AA186221AE06D8700EBB7ED /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		6AA186231AE06D8700EBB7ED /* placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholder@2x.png"; sourceTree = "<group>"; };
 		6AE9BA4B1ADC693F00347F39 /* AFAppFourSquareClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAppFourSquareClient.h; sourceTree = "<group>"; };
 		6AE9BA4C1ADC693F00347F39 /* AFAppFourSquareClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFAppFourSquareClient.m; sourceTree = "<group>"; };
 		6AE9BA561ADD5A8B00347F39 /* VenueTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenueTableViewController.h; sourceTree = "<group>"; };
@@ -107,6 +111,25 @@
 				DEBC8A174B86CE0F95598394 /* Pods-UrbnCodeSample.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		6A5277E11AE0367D00382B44 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				6A5277DC1ADF4D5400382B44 /* UCSVenue.h */,
+				6A5277DD1ADF4D5400382B44 /* UCSVenue.m */,
+				6A5277D91ADF4D5400382B44 /* UCSCategory.h */,
+				6A5277DA1ADF4D5400382B44 /* UCSCategory.m */,
+				6A5277D61ADF4D5400382B44 /* UCSStats.h */,
+				6A5277D71ADF4D5400382B44 /* UCSStats.m */,
+				6A5277D31ADF4D5400382B44 /* UCSIcon.h */,
+				6A5277D41ADF4D5400382B44 /* UCSIcon.m */,
+				6A5277D01ADF4D5400382B44 /* UCSLocation.h */,
+				6A5277D11ADF4D5400382B44 /* UCSLocation.m */,
+				6A5277CD1ADF4D5300382B44 /* UCSContact.h */,
+				6A5277CE1ADF4D5300382B44 /* UCSContact.m */,
+			);
+			name = Objects;
 			sourceTree = "<group>";
 		};
 		6A759FEF1ADC226D0065E91A = {
@@ -147,6 +170,8 @@
 		6A759FFB1ADC226D0065E91A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6AA186221AE06D8700EBB7ED /* placeholder.png */,
+				6AA186231AE06D8700EBB7ED /* placeholder@2x.png */,
 				6A759FFC1ADC226D0065E91A /* Info.plist */,
 				6A759FFD1ADC226D0065E91A /* main.m */,
 			);
@@ -182,18 +207,7 @@
 		6AE9BA4E1ADC694700347F39 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6A5277DC1ADF4D5400382B44 /* UCSVenue.h */,
-				6A5277DD1ADF4D5400382B44 /* UCSVenue.m */,
-				6A5277D91ADF4D5400382B44 /* UCSCategory.h */,
-				6A5277DA1ADF4D5400382B44 /* UCSCategory.m */,
-				6A5277D61ADF4D5400382B44 /* UCSStats.h */,
-				6A5277D71ADF4D5400382B44 /* UCSStats.m */,
-				6A5277D31ADF4D5400382B44 /* UCSIcon.h */,
-				6A5277D41ADF4D5400382B44 /* UCSIcon.m */,
-				6A5277D01ADF4D5400382B44 /* UCSLocation.h */,
-				6A5277D11ADF4D5400382B44 /* UCSLocation.m */,
-				6A5277CD1ADF4D5300382B44 /* UCSContact.h */,
-				6A5277CE1ADF4D5300382B44 /* UCSContact.m */,
+				6A5277E11AE0367D00382B44 /* Objects */,
 				6A3A412C1ADC2C5500388198 /* FourSquare.h */,
 				6A3A412D1ADC2C5500388198 /* FourSquare.m */,
 				6A3A41381ADC509700388198 /* CoreDataStack.h */,
@@ -306,7 +320,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AA186251AE06D8700EBB7ED /* placeholder@2x.png in Resources */,
 				6A75A00A1ADC226D0065E91A /* Main.storyboard in Resources */,
+				6AA186241AE06D8700EBB7ED /* placeholder.png in Resources */,
 				6A75A00F1ADC226D0065E91A /* LaunchScreen.xib in Resources */,
 				6A75A00C1ADC226D0065E91A /* Images.xcassets in Resources */,
 			);
