@@ -18,6 +18,8 @@
 #import "UCSIcon.h"
 #import "UCSLocation.h"
 #import "UCSStats.h"
+#import "UCSPhoto.h"
+#import "UCSPhotos.h"
 
 #define kCLIENTID @"YDU2NKEWT5N2VQPROGBXBUENW0GR3R4P41KDEZG1XLW5OANJ"
 #define kCLIENTSECRET @"CTRLBHZGCDW5WYQSSOYFBZ0VGTUNMXJI1DGPHDRWV3DNCUU0"
@@ -49,7 +51,7 @@
         @"venuePhotos" : @"1",
         @"sortByDistance" : @"1",
         @"ll" : ll,
-        @"query" : @"sushi"
+        //@"query" : @"sushi"
     };
 
     [[AFAppFourSquareClient sharedClient] GET:@"/v2/venues/explore" parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
@@ -58,10 +60,10 @@
         
         //Response if explore
         NSArray *items = [[responseObject objectForKey:@"response"] objectForKey:@"groups"];
-        NSArray *exploreArray =[[items firstObject] objectForKey:@"items"];
+        NSArray *exploreArray = [[items firstObject] objectForKey:@"items"];
         
         for (NSDictionary* item in exploreArray) {
-            NSLog(@"Venue %@", [[item objectForKey:@"venue"] objectForKey:@"featuredPhotos"]);
+            //NSLog(@"Venue %@", [[item objectForKey:@"venue"] objectForKey:@"featuredPhotos"]);
             [self saveResponse:[item objectForKey:@"venue"]];
         }
         block(nil);
@@ -97,6 +99,7 @@
             }
         }
         else {
+            NSLog(@"Property Name %@", [property name]);
             //If entity is a relationship call mapping recursively
             NSManagedObject* relationship = [self getManagedObjectNamed:[property name]];
 
@@ -104,7 +107,7 @@
             if ([[dictionary objectForKey:[property name]] isKindOfClass:[NSArray class]]) {
 
                 NSMutableSet* objectSet = [object mutableSetValueForKey:[property name]];
-                NSArray* objectArray = [dictionary objectForKey:@"categories"];
+                NSArray* objectArray = [dictionary objectForKey:[property name]];
 
                 for (NSDictionary* element in objectArray) {
                     [self mapFromDictionary:element toObject:relationship];
@@ -123,6 +126,7 @@
 // Map JSON Objects to NSManaged Objects
 - (NSManagedObject*)getManagedObjectNamed:(NSString*)objectName
 {
+
     CoreDataStack* coreDataStack = [CoreDataStack defaultStack];
     UCSContact* contact = [NSEntityDescription insertNewObjectForEntityForName:@"UCSContact" inManagedObjectContext:coreDataStack.managedObjectContext];
 
@@ -134,14 +138,22 @@
 
     UCSIcon* icon = [NSEntityDescription insertNewObjectForEntityForName:@"UCSIcon" inManagedObjectContext:coreDataStack.managedObjectContext];
 
+    UCSPhotos* photos = [NSEntityDescription insertNewObjectForEntityForName:@"UCSPhotos" inManagedObjectContext:coreDataStack.managedObjectContext];
+
+    UCSPhoto* photo = [NSEntityDescription insertNewObjectForEntityForName:@"UCSPhoto" inManagedObjectContext:coreDataStack.managedObjectContext];
+
     //JSON Properties and cooresponding ManagedObject instances
     NSDictionary* entities = @{
         @"contact" : contact,
         @"location" : location,
         @"stats" : stats,
         @"categories" : category,
-        @"icon" : icon
+        @"icon" : icon,
+        @"featuredPhotos" : photos,
+        @"items" : photo
     };
+
+    //NSLog(@"obj name %@", objectName);
 
     //REFACTOR THIS LATER
     NSManagedObject* relationshipObject;

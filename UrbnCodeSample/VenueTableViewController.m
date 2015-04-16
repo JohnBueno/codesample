@@ -12,6 +12,8 @@
 #import "UCSIcon.h"
 #import "UCSLocation.h"
 #import "UCSContact.h"
+#import "UCSPhotos.h"
+#import "UCSPhoto.h"
 #import "FourSquare.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIScrollView+SVInfiniteScrolling.h"
@@ -89,7 +91,7 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
     UCSVenue* venue = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
+    NSLog(@"photos %@", [[venue.featuredPhotos.items allObjects] firstObject]);
     //Set image
     UIImageView* imageView = (UIImageView*)[cell viewWithTag:100];
     NSDictionary* icon = [[[venue.categories allObjects] firstObject] valueForKey:@"icon"];
