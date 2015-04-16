@@ -32,22 +32,24 @@
                     withBlock:(void (^)(NSError*))block
 {
 
-    //if (offset == 0) {
+    if (offset == 0) {
     NSLog(@"Clear Data for new");
     [[CoreDataStack defaultStack] clearAll];
-    //}
+    }
 
     NSString* ll = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
     NSString* offsetString = [NSString stringWithFormat:@"%d", offset];
     NSString* limitString = [NSString stringWithFormat:@"%d", limit];
+
     NSLog(@"Limit %@", limitString);
     NSLog(@"Offset %@", offsetString);
+
     NSDictionary* params = @{
         @"client_id" : kCLIENTID,
         @"client_secret" : kCLIENTSECRET,
         @"v" : @"20130815",
         @"limit" : limitString,
-        @"offset" : @"0",
+        @"offset" : offsetString,
         @"venuePhotos" : @"1",
         @"sortByDistance" : @"1",
         @"ll" : ll,

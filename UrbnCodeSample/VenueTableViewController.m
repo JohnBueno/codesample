@@ -45,11 +45,13 @@
         FourSquare *fourSquare = [[FourSquare alloc] init];
         [fourSquare getVenuesNearLatitude:weakSelf.latitude
                              andLongitude:weakSelf.longitude
-                                andOffset:10
-                                 andLimit:10
+                                andOffset:weakSelf.offset
+                                 andLimit:weakSelf.limit
                                 withBlock:^(NSError *error) {
                                     
+                                    
                                     if (!error) {
+                                        offset += limit;
                                         [weakSelf.fetchedResultsController performFetch:nil];
                                     }else{
                                         NSLog(@"Error %@", error);
