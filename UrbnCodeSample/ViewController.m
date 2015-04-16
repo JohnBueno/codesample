@@ -84,7 +84,11 @@
 - (void)locationManager:(CLLocationManager*)manager
        didFailWithError:(NSError*)error
 {
+    [SVProgressHUD dismiss];
+    UIAlertView* locationError = [[UIAlertView alloc] initWithTitle:@"Error getting location" message:@"Location Services are not available" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
     // Add instructions if in simulator
+    [locationError show];
+
     NSLog(@"Location Error %@", error);
 }
 

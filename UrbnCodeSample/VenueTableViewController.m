@@ -34,6 +34,11 @@
 {
     [super viewDidLoad];
     [self.fetchedResultsController performFetch:nil];
+    [self setUpInfiniteScrolling];
+}
+
+- (void)setUpInfiniteScrolling
+{
     limit = 10;
     offset = 10;
 
@@ -48,15 +53,15 @@
                                 andOffset:weakSelf.offset
                                  andLimit:weakSelf.limit
                                 withBlock:^(NSError *error) {
-                                    
-                                    
                                     if (!error) {
                                         offset += limit;
                                         [weakSelf.fetchedResultsController performFetch:nil];
                                     }else{
                                         NSLog(@"Error %@", error);
                                     }
-                                    weakSelf.tableView.showsInfiniteScrolling = NO;
+                                    [weakSelf.tableView.infiniteScrollingView stopAnimating];
+                                    //weakSelf.tableView.showsInfiniteScrolling = NO;
+                                    //[weakSelf.tableView.infiniteScrollingView performSelector:@selector(stopAnimating) withObject:nil];
                                 }];
 
     }];
@@ -83,10 +88,10 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
     UCSVenue* venue = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    //NSLog(@"url %@", [venue valueForKey:@"url"]);
-    //NSLog(@"location %@", venue.location);
-    //NSLog(@"Name %@", venue.name);
-    //NSLog(@"category %@", [[[venue.categories allObjects] firstObject] valueForKey:@"icon"]);
+    //    NSLog(@"url %@", [venue valueForKey:@"url"]);
+    //    NSLog(@"location %@", venue.location);
+    //    NSLog(@"Name %@", venue.name);
+    //    NSLog(@"category %@", [[[venue.categories allObjects] firstObject] valueForKey:@"icon"]);
     cell.textLabel.text = venue.name;
 
     return cell;
@@ -121,7 +126,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController*)controller
 {
-    NSLog(@"Did change data");
+    //NSLog(@"Did change data");
     [self.tableView reloadData];
 }
 
