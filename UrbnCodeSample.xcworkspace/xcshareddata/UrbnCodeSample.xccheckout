@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>A748A00F-CA05-43F2-840D-FD4957423245</string>
+	<key>IDESourceControlProjectName</key>
+	<string>UrbnCodeSample</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>78195A0ED255DBB524A8975D94B2C735762DDA33</key>
+		<string>https://github.com/JohnBueno/codesample.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>UrbnCodeSample.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>78195A0ED255DBB524A8975D94B2C735762DDA33</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/JohnBueno/codesample.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>78195A0ED255DBB524A8975D94B2C735762DDA33</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>78195A0ED255DBB524A8975D94B2C735762DDA33</string>
+			<key>IDESourceControlWCCName</key>
+			<string>UrbnCodeSample</string>
+		</dict>
+	</array>
+</dict>
+</plist>

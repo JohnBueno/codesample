@@ -15,11 +15,17 @@
 @interface ViewController () <CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel* lblAddress;
+- (IBAction)toggleSearchPressed:(id)sender;
 
 - (IBAction)getLocationPressed:(id)sender;
-- (IBAction)viewResultsBtnPressed:(id)sender;
-- (IBAction)searchForQuery:(id)sender;
+
+- (void)viewResultsBtnPressed;
+
+- (void)searchForQuery;
+
 @property (strong, nonatomic) IBOutlet UITextField* inputQuery;
+@property (strong, nonatomic) IBOutlet UIButton* btnToggleSearch;
+@property (strong, nonatomic) IBOutlet UIButton* btnSearch;
 
 @end
 
@@ -36,6 +42,8 @@
 
 @synthesize lblAddress;
 @synthesize inputQuery;
+@synthesize btnToggleSearch;
+@synthesize btnSearch;
 
 - (void)viewDidLoad
 {
@@ -44,26 +52,41 @@
     [self getlocation];
 }
 
-// Manually Update location
-- (IBAction)getLocationPressed:(id)sender
+// Toggle Search function
+- (IBAction)toggleSearchPressed:(id)sender
 {
-    [self getlocation];
+    [lblAddress setHidden:!lblAddress.hidden];
+    [inputQuery setHidden:!inputQuery.hidden];
+    if (lblAddress.hidden) {
+        [btnToggleSearch setTitle:@"Show me everything" forState:UIControlStateNormal];
+        [btnSearch addTarget:self action:@selector(searchForQuery) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else {
+        [btnToggleSearch setTitle:@"Find something specfic" forState:UIControlStateNormal];
+        [btnSearch addTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
+    }
 }
 
 // View all results for location
-- (IBAction)viewResultsBtnPressed:(id)sender
+- (void)viewResultsBtnPressed
 {
     [self requestVenuesFromFourSquareWithQuery:nil];
 }
 
 // Search for query near location
-- (IBAction)searchForQuery:(id)sender
+- (void)searchForQuery
 {
     query = inputQuery.text;
     if (![inputQuery.text isEqualToString:@""]) {
         query = inputQuery.text;
     }
     [self requestVenuesFromFourSquareWithQuery:query];
+}
+
+// Manually get location
+- (IBAction)getLocationPressed:(id)sender
+{
+    [self getlocation];
 }
 
 // Request venues from FourSquare

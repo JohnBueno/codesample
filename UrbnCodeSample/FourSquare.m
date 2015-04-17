@@ -108,7 +108,6 @@
             //For sure reason when running on an actual device isKindOfClass does not see it as an array
             //Works fine in the sim
             if ([[dictionary objectForKey:[property name]] isKindOfClass:[NSArray class]] || [[property name] isEqualToString:@"items"]) {
-                //NSLog(@"Property %@", [property name]);
 
                 NSMutableSet* objectSet = [object mutableSetValueForKey:[property name]];
                 NSArray* objectArray = [dictionary objectForKey:[property name]];
@@ -122,7 +121,6 @@
             }
             //Else property is just a dictionary no need to iterate
             else {
-                NSLog(@"Property %@", [property name]);
                 [FourSquare mapFromDictionary:[dictionary objectForKey:[property name]] toObject:relationship];
                 [object setValue:relationship forKey:[property name]];
             }
