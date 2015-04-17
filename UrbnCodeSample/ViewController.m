@@ -67,25 +67,7 @@
 
 - (IBAction)viewResultsBtnPressed:(id)sender
 {
-    NSLog(@"Search button Pressed");
-    [SVProgressHUD showWithStatus:@"Generating List" maskType:SVProgressHUDMaskTypeGradient];
-
-    [fourSquare getVenuesNearLatitude:latitude
-                         andLongitude:longitude
-                            andOffset:0
-                             andLimit:10
-                             andQuery:nil
-                            withBlock:^(NSError* error) {
-                                
-                                [SVProgressHUD dismiss];
-                                if(!error){
-                                    [self performSegueWithIdentifier:@"showResults" sender:self];
-                                    [inputQuery setText:@""];
-                                }else{
-                                    NSLog(@"error %@", error);
-                                }
-
-                            }];
+    [self requestVenuesFromFourSquareWithQuery:nil];
 }
 
 - (IBAction)searchForQuery:(id)sender
@@ -95,7 +77,11 @@
     if (![inputQuery.text isEqualToString:@""]) {
         query = inputQuery.text;
     }
+    [self requestVenuesFromFourSquareWithQuery:query];
+}
 
+- (void)requestVenuesFromFourSquareWithQuery:(NSString*)query
+{
     [SVProgressHUD showWithStatus:@"Generating List" maskType:SVProgressHUDMaskTypeGradient];
 
     [fourSquare getVenuesNearLatitude:latitude
