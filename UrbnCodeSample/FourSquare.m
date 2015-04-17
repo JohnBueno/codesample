@@ -49,7 +49,7 @@
         [params addEntriesFromDictionary:[NSDictionary dictionaryWithObjectsAndKeys:query, @"query", nil]];
     }
 
-    NSLog(@"Params %@", params);
+    //NSLog(@"Params %@", params);
 
     [[AFAppFourSquareClient sharedClient] GET:@"/v2/venues/explore" parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
         //Response if Search

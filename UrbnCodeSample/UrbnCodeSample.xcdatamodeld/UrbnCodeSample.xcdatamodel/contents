@@ -19,10 +19,12 @@
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSCategory" inverseName="icon" inverseEntity="UCSCategory" syncable="YES"/>
     </entity>
     <entity name="UCSLocation" representedClassName="UCSLocation" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="cc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="distance" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="postalCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="venue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UCSVenue" inverseName="location" inverseEntity="UCSVenue" syncable="YES"/>
     </entity>
@@ -49,6 +51,7 @@
     <entity name="UCSVenue" representedClassName="UCSVenue" syncable="YES">
         <attribute name="hasMenu" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rating" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="referralId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="venueId" optional="YES" attributeType="String" syncable="YES"/>
@@ -63,10 +66,10 @@
         <element name="UCSCategory" positionX="-117" positionY="72" width="128" height="135"/>
         <element name="UCSContact" positionX="-45" positionY="27" width="128" height="90"/>
         <element name="UCSIcon" positionX="-99" positionY="126" width="128" height="90"/>
-        <element name="UCSLocation" positionX="-153" positionY="81" width="128" height="135"/>
-        <element name="UCSStats" positionX="-144" positionY="90" width="128" height="105"/>
-        <element name="UCSVenue" positionX="-263" positionY="-18" width="128" height="210"/>
-        <element name="UCSPhotos" positionX="-153" positionY="81" width="128" height="90"/>
+        <element name="UCSLocation" positionX="-153" positionY="81" width="128" height="165"/>
         <element name="UCSPhoto" positionX="-144" positionY="90" width="128" height="150"/>
+        <element name="UCSPhotos" positionX="-153" positionY="81" width="128" height="90"/>
+        <element name="UCSStats" positionX="-144" positionY="90" width="128" height="105"/>
+        <element name="UCSVenue" positionX="-263" positionY="-18" width="128" height="225"/>
     </elements>
 </model>

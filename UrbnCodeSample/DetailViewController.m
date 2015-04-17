@@ -25,6 +25,7 @@
 @property (strong, nonatomic) IBOutlet UILabel* lblAddressLine2;
 @property (strong, nonatomic) IBOutlet UILabel* lblHours;
 @property (strong, nonatomic) IBOutlet UILabel* lblWebsite;
+@property (strong, nonatomic) IBOutlet UILabel* lblRating;
 
 @end
 
@@ -39,15 +40,19 @@
 @synthesize lblHours;
 @synthesize lblWebsite;
 @synthesize lblCategory;
-
+@synthesize lblRating;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     NSLog(@"Venue %@", detailVenue);
     [lblVenueName setText:detailVenue.name];
+    [lblRating setText:[NSString stringWithFormat:@"%1.1f", detailVenue.rating]];
+    [lblWebsite setText:detailVenue.url];
 
     //Location
-    //UCSLocation* location = detailVenue.location
+    UCSLocation* location = detailVenue.location;
+    lblAddressLine1.text = location.address;
+    lblAddressLine2.text = [NSString stringWithFormat:@"%@, %@ %@", location.city, location.state, location.postalCode];
 
     //Category
     UCSCategory* category = [[detailVenue.categories allObjects] firstObject];
@@ -59,7 +64,6 @@
 
     //Photo
     UCSPhoto* photo = [[detailVenue.featuredPhotos.items allObjects] firstObject];
-    NSLog(@"Image %@", photo.suffix);
     NSString* venueImageSize = [NSString stringWithFormat:@"%dx%d", photo.width, photo.height];
     NSString* venueImageUrlString = [self imageFromPrefix:photo.prefix andSize:venueImageSize andSuffix:photo.suffix];
     [imgVenue sd_setImageWithURL:[NSURL URLWithString:venueImageUrlString]

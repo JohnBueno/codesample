@@ -90,13 +90,15 @@
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    NSString* cellIdentifier;
-    if (indexPath.row % 2 == 0)
-        cellIdentifier = @"DarkCell";
-    else
-        cellIdentifier = @"LightCell";
 
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+
+    if (indexPath.row % 2 == 0) {
+        [cell setBackgroundColor:[UIColor colorWithRed:(244.0f / 255.0f)green:(244.0f / 255.0f)blue:(244.0f / 255.0f)alpha:1]];
+    }
+    else {
+        [cell setBackgroundColor:[UIColor whiteColor]];
+    }
 
     UCSVenue* venue = [self.fetchedResultsController objectAtIndexPath:indexPath];
 

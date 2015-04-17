@@ -13,6 +13,7 @@
 #import "UCSPhotos.h"
 #import "UCSStats.h"
 
+
 @implementation UCSVenue
 
 @dynamic hasMenu;
@@ -21,10 +22,11 @@
 @dynamic url;
 @dynamic venueId;
 @dynamic verified;
+@dynamic rating;
 @dynamic categories;
 @dynamic contact;
+@dynamic featuredPhotos;
 @dynamic location;
 @dynamic stats;
-@dynamic featuredPhotos;
 
 @end

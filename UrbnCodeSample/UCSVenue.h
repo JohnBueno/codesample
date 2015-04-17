@@ -14,23 +14,24 @@
 @interface UCSVenue : NSManagedObject
 
 @property (nonatomic) int16_t hasMenu;
-@property (nonatomic, retain) NSString* name;
-@property (nonatomic, retain) NSString* referralId;
-@property (nonatomic, retain) NSString* url;
-@property (nonatomic, retain) NSString* venueId;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * referralId;
+@property (nonatomic, retain) NSString * url;
+@property (nonatomic, retain) NSString * venueId;
 @property (nonatomic) BOOL verified;
-@property (nonatomic, retain) NSSet* categories;
-@property (nonatomic, retain) UCSContact* contact;
-@property (nonatomic, retain) UCSLocation* location;
-@property (nonatomic, retain) UCSStats* stats;
-@property (nonatomic, retain) UCSPhotos* featuredPhotos;
+@property (nonatomic) float rating;
+@property (nonatomic, retain) NSSet *categories;
+@property (nonatomic, retain) UCSContact *contact;
+@property (nonatomic, retain) UCSPhotos *featuredPhotos;
+@property (nonatomic, retain) UCSLocation *location;
+@property (nonatomic, retain) UCSStats *stats;
 @end
 
 @interface UCSVenue (CoreDataGeneratedAccessors)
 
-- (void)addCategoriesObject:(UCSCategory*)value;
-- (void)removeCategoriesObject:(UCSCategory*)value;
-- (void)addCategories:(NSSet*)values;
-- (void)removeCategories:(NSSet*)values;
+- (void)addCategoriesObject:(UCSCategory *)value;
+- (void)removeCategoriesObject:(UCSCategory *)value;
+- (void)addCategories:(NSSet *)values;
+- (void)removeCategories:(NSSet *)values;
 
 @end
