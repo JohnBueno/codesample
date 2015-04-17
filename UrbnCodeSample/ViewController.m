@@ -68,8 +68,24 @@
 - (IBAction)viewResultsBtnPressed:(id)sender
 {
     NSLog(@"Search button Pressed");
-    [self performSegueWithIdentifier:@"showResults" sender:nil];
-    //[Venues testAFNetworking];
+    [SVProgressHUD showWithStatus:@"Generating List" maskType:SVProgressHUDMaskTypeGradient];
+
+    [fourSquare getVenuesNearLatitude:latitude
+                         andLongitude:longitude
+                            andOffset:0
+                             andLimit:10
+                             andQuery:nil
+                            withBlock:^(NSError* error) {
+                                
+                                [SVProgressHUD dismiss];
+                                if(!error){
+                                    [self performSegueWithIdentifier:@"showResults" sender:self];
+                                    [inputQuery setText:@""];
+                                }else{
+                                    NSLog(@"error %@", error);
+                                }
+
+                            }];
 }
 
 - (IBAction)searchForQuery:(id)sender
@@ -79,9 +95,26 @@
     if (![inputQuery.text isEqualToString:@""]) {
         query = inputQuery.text;
     }
-    NSLog(@"query %@", query);
 
-    [self searchForVenuesWithQuery:query];
+    [SVProgressHUD showWithStatus:@"Generating List" maskType:SVProgressHUDMaskTypeGradient];
+
+    [fourSquare getVenuesNearLatitude:latitude
+                         andLongitude:longitude
+                            andOffset:0
+                             andLimit:10
+                             andQuery:query
+                            withBlock:^(NSError* error) {
+                                
+                                [SVProgressHUD dismiss];
+                                if(!error){
+                                    //NSLog(@"Push to list");
+                                    [self performSegueWithIdentifier:@"showResults" sender:self];
+                                    [inputQuery setText:@""];
+                                }else{
+                                    NSLog(@"error %@", error);
+                                }
+
+                            }];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
@@ -117,33 +150,9 @@
         didFindLocation = YES;
         latitude = location.coordinate.latitude;
         longitude = location.coordinate.longitude;
-        // Convert all fourSqaure to class method
-        // Instance not needed with coredata
-        [self searchForVenuesWithQuery:nil];
+        [SVProgressHUD dismiss];
     }
     [self getAddressForLocation:location];
-}
-
-- (void)searchForVenuesWithQuery:(NSString*)query
-{
-
-    [SVProgressHUD showWithStatus:@"Generating List" maskType:SVProgressHUDMaskTypeGradient];
-
-    [fourSquare getVenuesNearLatitude:latitude
-                         andLongitude:longitude
-                            andOffset:0
-                             andLimit:10
-                             andQuery:query
-                            withBlock:^(NSError* error) {
-                                
-                                [SVProgressHUD dismiss];
-                                if(!error){
-                                    NSLog(@"Push to list");
-                                }else{
-                                    NSLog(@"error %@", error);
-                                }
-
-                            }];
 }
 
 - (void)getAddressForLocation:(CLLocation*)location
