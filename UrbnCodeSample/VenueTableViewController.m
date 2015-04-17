@@ -32,6 +32,7 @@
 
 @synthesize latitude;
 @synthesize longitude;
+@synthesize queryString;
 @synthesize offset;
 @synthesize limit;
 
@@ -57,7 +58,7 @@
                              andLongitude:weakSelf.longitude
                                 andOffset:weakSelf.offset
                                  andLimit:weakSelf.limit
-                                 andQuery:nil
+                                 andQuery:weakSelf.queryString
                                 withBlock:^(NSError *error) {
                                     if (!error) {
                                         offset += limit;

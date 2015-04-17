@@ -29,6 +29,7 @@
     CLPlacemark* placeMark;
     float latitude;
     float longitude;
+    NSString* query;
     BOOL didFindLocation;
     FourSquare* fourSquare;
 }
@@ -44,35 +45,21 @@
     [self getlocation];
 }
 
+// Manually Update location
 - (IBAction)getLocationPressed:(id)sender
 {
-    NSLog(@"get location button");
     [self getlocation];
 }
 
-- (void)getlocation
-{
-    didFindLocation = NO;
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    [SVProgressHUD showWithStatus:@"Finding Location" maskType:SVProgressHUDMaskTypeGradient];
-
-    if ([locationManager
-            respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        [locationManager requestWhenInUseAuthorization];
-    }
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [locationManager startUpdatingLocation];
-}
-
+// View all results for location
 - (IBAction)viewResultsBtnPressed:(id)sender
 {
     [self requestVenuesFromFourSquareWithQuery:nil];
 }
 
+// Search for query near location
 - (IBAction)searchForQuery:(id)sender
 {
-    NSString* query;
     query = inputQuery.text;
     if (![inputQuery.text isEqualToString:@""]) {
         query = inputQuery.text;
@@ -80,7 +67,8 @@
     [self requestVenuesFromFourSquareWithQuery:query];
 }
 
-- (void)requestVenuesFromFourSquareWithQuery:(NSString*)query
+// Request venues from FourSquare
+- (void)requestVenuesFromFourSquareWithQuery:(NSString*)_query
 {
     [SVProgressHUD showWithStatus:@"Generating List" maskType:SVProgressHUDMaskTypeGradient];
 
@@ -88,7 +76,7 @@
                          andLongitude:longitude
                             andOffset:0
                              andLimit:10
-                             andQuery:query
+                             andQuery:_query
                             withBlock:^(NSError* error) {
                                 
                                 [SVProgressHUD dismiss];
@@ -110,10 +98,27 @@
         VenueTableViewController* venueTableViewController = [segue destinationViewController];
         venueTableViewController.latitude = latitude;
         venueTableViewController.longitude = longitude;
+        venueTableViewController.queryString = query;
     }
 }
 
 #pragma mark CLLocationManagerDelegate Methods
+
+// Set up Location Manager
+- (void)getlocation
+{
+    didFindLocation = NO;
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    [SVProgressHUD showWithStatus:@"Finding Location" maskType:SVProgressHUDMaskTypeGradient];
+
+    if ([locationManager
+            respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [locationManager requestWhenInUseAuthorization];
+    }
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [locationManager startUpdatingLocation];
+}
 
 - (void)locationManager:(CLLocationManager*)manager
        didFailWithError:(NSError*)error
@@ -123,7 +128,7 @@
     // Add instructions if in simulator
     [locationError show];
 
-    NSLog(@"Location Error %@", error);
+    [lblAddress setText:@"Location services not available"];
 }
 
 - (void)locationManager:(CLLocationManager*)manager
@@ -141,6 +146,7 @@
     [self getAddressForLocation:location];
 }
 
+// Build actual address.
 - (void)getAddressForLocation:(CLLocation*)location
 {
     [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray* placemarks, NSError* error) {
