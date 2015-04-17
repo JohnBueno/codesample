@@ -104,18 +104,25 @@
             NSManagedObject* relationship = [FourSquare getManagedObjectNamed:[property name]];
 
             //If this property is an array then loop through and set 1 to many relationship
-            if ([[dictionary objectForKey:[property name]] isKindOfClass:[NSArray class]]) {
+            //Regretably at the last min I had to hardcode the items property here
+            //For sure reason when running on an actual device isKindOfClass does not see it as an array
+            //Works fine in the sim
+            if ([[dictionary objectForKey:[property name]] isKindOfClass:[NSArray class]] || [[property name] isEqualToString:@"items"]) {
+                //NSLog(@"Property %@", [property name]);
 
                 NSMutableSet* objectSet = [object mutableSetValueForKey:[property name]];
                 NSArray* objectArray = [dictionary objectForKey:[property name]];
 
                 for (NSDictionary* element in objectArray) {
-                    [FourSquare mapFromDictionary:element toObject:relationship];
-                    [objectSet addObject:relationship];
+                    if (relationship != nil) {
+                        [FourSquare mapFromDictionary:element toObject:relationship];
+                        [objectSet addObject:relationship];
+                    }
                 }
             }
             //Else property is just a dictionary no need to iterate
             else {
+                NSLog(@"Property %@", [property name]);
                 [FourSquare mapFromDictionary:[dictionary objectForKey:[property name]] toObject:relationship];
                 [object setValue:relationship forKey:[property name]];
             }
