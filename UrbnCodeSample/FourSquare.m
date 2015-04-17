@@ -154,9 +154,6 @@
         @"items" : photo
     };
 
-    //NSLog(@"obj name %@", objectName);
-
-    //REFACTOR THIS LATER
     NSManagedObject* relationshipObject;
     if ([entities objectForKey:objectName]) {
         relationshipObject = [entities objectForKey:objectName];

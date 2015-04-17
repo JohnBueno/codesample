@@ -119,11 +119,22 @@
     [locationManager startUpdatingLocation];
 }
 
+// If location manager fails to get location
 - (void)locationManager:(CLLocationManager*)manager
        didFailWithError:(NSError*)error
 {
     [SVProgressHUD dismiss];
-    UIAlertView* locationError = [[UIAlertView alloc] initWithTitle:@"Error getting location" message:@"Location Services are not available" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
+
+    NSString* errorMessage;
+
+    if (TARGET_IPHONE_SIMULATOR) {
+        errorMessage = @"The simulator cannot retreive location data.  To simulate select debug/location.";
+    }
+    else {
+        errorMessage = @"Location Services are not available";
+    }
+
+    UIAlertView* locationError = [[UIAlertView alloc] initWithTitle:@"Error getting location" message:errorMessage delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
     // Add instructions if in simulator
     [locationError show];
 
