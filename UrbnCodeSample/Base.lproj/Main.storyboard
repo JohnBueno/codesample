@@ -22,7 +22,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="1pU-1o-qq0">
                                 <rect key="frame" x="-4" y="0.0" width="383" height="667"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h4W-dU-EfO">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" minimumFontSize="7" preferredMaxLayoutWidth="193" translatesAutoresizingMaskIntoConstraints="NO" id="h4W-dU-EfO">
                                 <rect key="frame" x="91" y="208" width="193" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="Czt-us-jxP"/>
@@ -45,7 +45,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VaI-FO-BSH">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="VaI-FO-BSH">
                                 <rect key="frame" x="179" y="328" width="16" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="2Sj-74-zZs"/>
@@ -106,7 +106,6 @@
                             <constraint firstItem="7F0-DH-Hh7" firstAttribute="top" secondItem="h4W-dU-EfO" secondAttribute="bottom" constant="10" id="VJp-zo-fRj"/>
                             <constraint firstItem="1pU-1o-qq0" firstAttribute="centerX" secondItem="Puv-4G-JZ2" secondAttribute="centerX" id="Zey-lr-5nd"/>
                             <constraint firstItem="1pU-1o-qq0" firstAttribute="centerX" secondItem="7F0-DH-Hh7" secondAttribute="centerX" id="eCf-RU-arv"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="T8s-yl-j2P" secondAttribute="bottom" constant="286" id="hw4-L4-IZD"/>
                             <constraint firstItem="Puv-4G-JZ2" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="116" id="tkO-vL-9VY"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="1pU-1o-qq0" secondAttribute="bottom" id="xuC-q6-A5B"/>
                             <constraint firstItem="1pU-1o-qq0" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-20" id="zY1-7q-btP"/>
