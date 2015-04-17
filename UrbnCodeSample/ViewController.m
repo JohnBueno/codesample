@@ -50,6 +50,7 @@
     [super viewDidLoad];
     geoCoder = [[CLGeocoder alloc] init];
     [self getlocation];
+    [btnSearch addTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
 }
 
 // Toggle Search function
@@ -57,6 +58,7 @@
 {
     [lblAddress setHidden:!lblAddress.hidden];
     [inputQuery setHidden:!inputQuery.hidden];
+
     if (lblAddress.hidden) {
         [btnToggleSearch setTitle:@"Show me everything" forState:UIControlStateNormal];
         [btnSearch addTarget:self action:@selector(searchForQuery) forControlEvents:UIControlEventTouchUpInside];
@@ -70,6 +72,7 @@
 // View all results for location
 - (void)viewResultsBtnPressed
 {
+    NSLog(@"View Results");
     [self requestVenuesFromFourSquareWithQuery:nil];
 }
 
