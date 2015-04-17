@@ -44,7 +44,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"Venue %@", detailVenue);
     [lblVenueName setText:detailVenue.name];
     [lblRating setText:[NSString stringWithFormat:@"%1.1f", detailVenue.rating]];
     [lblWebsite setText:detailVenue.url];
