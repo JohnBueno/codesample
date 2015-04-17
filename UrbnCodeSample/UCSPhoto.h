@@ -9,16 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class NSManagedObject;
+@class UCSPhotos;
 
 @interface UCSPhoto : NSManagedObject
 
 @property (nonatomic) int16_t createdAt;
 @property (nonatomic) int16_t height;
-@property (nonatomic) int16_t* width;
-@property (nonatomic, retain) NSString* photoID;
-@property (nonatomic, retain) NSString* prefix;
-@property (nonatomic, retain) NSString* suffix;
-@property (nonatomic, retain) NSManagedObject* photos;
+@property (nonatomic, retain) NSString * photoID;
+@property (nonatomic, retain) NSString * prefix;
+@property (nonatomic, retain) NSString * suffix;
+@property (nonatomic) int16_t width;
+@property (nonatomic, retain) UCSPhotos *photos;
 
 @end

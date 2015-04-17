@@ -18,6 +18,8 @@
 
 - (IBAction)getLocationPressed:(id)sender;
 - (IBAction)viewResultsBtnPressed:(id)sender;
+- (IBAction)searchForQuery:(id)sender;
+@property (strong, nonatomic) IBOutlet UITextField* inputQuery;
 
 @end
 
@@ -32,6 +34,7 @@
 }
 
 @synthesize lblAddress;
+@synthesize inputQuery;
 
 - (void)viewDidLoad
 {
@@ -69,6 +72,18 @@
     //[Venues testAFNetworking];
 }
 
+- (IBAction)searchForQuery:(id)sender
+{
+    NSString* query;
+    query = inputQuery.text;
+    if (![inputQuery.text isEqualToString:@""]) {
+        query = inputQuery.text;
+    }
+    NSLog(@"query %@", query);
+
+    [self searchForVenuesWithQuery:query];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
 {
     // Make sure your segue name in storyboard is the same as this line
@@ -104,23 +119,31 @@
         longitude = location.coordinate.longitude;
         // Convert all fourSqaure to class method
         // Instance not needed with coredata
-        [SVProgressHUD showWithStatus:@"Generating List" maskType:SVProgressHUDMaskTypeGradient];
-        [fourSquare getVenuesNearLatitude:latitude
-                             andLongitude:longitude
-                                andOffset:0
-                                 andLimit:10
-                                withBlock:^(NSError* error) {
-                                    
-                                    [SVProgressHUD dismiss];
-                                    if(!error){
-                                        NSLog(@"Push to list");
-                                    }else{
-                                        NSLog(@"error %@", error);
-                                    }
-
-                                }];
+        [self searchForVenuesWithQuery:nil];
     }
     [self getAddressForLocation:location];
+}
+
+- (void)searchForVenuesWithQuery:(NSString*)query
+{
+
+    [SVProgressHUD showWithStatus:@"Generating List" maskType:SVProgressHUDMaskTypeGradient];
+
+    [fourSquare getVenuesNearLatitude:latitude
+                         andLongitude:longitude
+                            andOffset:0
+                             andLimit:10
+                             andQuery:query
+                            withBlock:^(NSError* error) {
+                                
+                                [SVProgressHUD dismiss];
+                                if(!error){
+                                    NSLog(@"Push to list");
+                                }else{
+                                    NSLog(@"error %@", error);
+                                }
+
+                            }];
 }
 
 - (void)getAddressForLocation:(CLLocation*)location

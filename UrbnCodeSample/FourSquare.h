@@ -19,6 +19,7 @@
                  andLongitude:(float)longitude
                     andOffset:(int)offset
                      andLimit:(int)limit
+                     andQuery:(NSString*)query
                     withBlock:(void (^)(NSError*))block;
 
 - (void)saveResponse:(NSDictionary*)dictionary;

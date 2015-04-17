@@ -7,6 +7,7 @@
 //
 
 #import "UCSPhoto.h"
+#import "UCSPhotos.h"
 
 @implementation UCSPhoto
 

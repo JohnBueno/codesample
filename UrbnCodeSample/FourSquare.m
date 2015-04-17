@@ -31,6 +31,7 @@
                  andLongitude:(float)longitude
                     andOffset:(int)offset
                      andLimit:(int)limit
+                     andQuery:(NSString*)query
                     withBlock:(void (^)(NSError*))block
 {
 
@@ -42,28 +43,24 @@
     NSString* offsetString = [NSString stringWithFormat:@"%d", offset];
     NSString* limitString = [NSString stringWithFormat:@"%d", limit];
 
-    NSDictionary* params = @{
-        @"client_id" : kCLIENTID,
-        @"client_secret" : kCLIENTSECRET,
-        @"v" : @"20130815",
-        @"limit" : limitString,
-        @"offset" : offsetString,
-        @"venuePhotos" : @"1",
-        @"sortByDistance" : @"1",
-        @"ll" : ll,
-        //@"query" : @"sushi"
-    };
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithObjectsAndKeys:kCLIENTID, @"client_id", kCLIENTSECRET, @"client_secret", @"20130815", @"v", limitString, @"limit", offsetString, @"offset", @"1", @"venuePhotos", @"1", @"sortByDistance", ll, @"ll", nil];
+
+    if (query) {
+        [params addEntriesFromDictionary:[NSDictionary dictionaryWithObjectsAndKeys:query, @"query", nil]];
+    }
+
+    NSLog(@"Params %@", params);
 
     [[AFAppFourSquareClient sharedClient] GET:@"/v2/venues/explore" parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
         //Response if Search
+        //Might need this for query
         //NSMutableArray *venues = [[NSMutableArray alloc] initWithArray:[[responseObject objectForKey:@"response"] objectForKey:@"venues"]];
         
         //Response if explore
         NSArray *items = [[responseObject objectForKey:@"response"] objectForKey:@"groups"];
         NSArray *exploreArray = [[items firstObject] objectForKey:@"items"];
-        
         for (NSDictionary* item in exploreArray) {
-            //NSLog(@"Venue %@", [[item objectForKey:@"venue"] objectForKey:@"featuredPhotos"]);
+            //NSLog(@"Venue %@", [item objectForKey:@"venue"]);
             [self saveResponse:[item objectForKey:@"venue"]];
         }
         block(nil);
@@ -99,7 +96,6 @@
             }
         }
         else {
-            NSLog(@"Property Name %@", [property name]);
             //If entity is a relationship call mapping recursively
             NSManagedObject* relationship = [self getManagedObjectNamed:[property name]];
 

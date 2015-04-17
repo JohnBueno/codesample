@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "UCSVenue.h"
 @interface DetailViewController : UIViewController
+
+@property (strong, nonatomic) UCSVenue* detailVenue;
 
 @end

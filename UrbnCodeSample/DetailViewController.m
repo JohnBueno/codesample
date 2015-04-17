@@ -7,21 +7,70 @@
 //
 
 #import "DetailViewController.h"
+#import "UCSIcon.h"
+#import "UCSLocation.h"
+#import "UCSContact.h"
+#import "UCSCategory.h"
+#import "UCSPhotos.h"
+#import "UCSPhoto.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface DetailViewController ()
+
+@property (strong, nonatomic) IBOutlet UILabel* lblCategory;
+@property (strong, nonatomic) IBOutlet UIImageView* imgVenue;
+@property (strong, nonatomic) IBOutlet UIImageView* imgCategory;
+@property (strong, nonatomic) IBOutlet UILabel* lblVenueName;
+@property (strong, nonatomic) IBOutlet UILabel* lblAddressLine1;
+@property (strong, nonatomic) IBOutlet UILabel* lblAddressLine2;
+@property (strong, nonatomic) IBOutlet UILabel* lblHours;
+@property (strong, nonatomic) IBOutlet UILabel* lblWebsite;
 
 @end
 
 @implementation DetailViewController
 
-- (void)viewDidLoad {
+@synthesize detailVenue;
+@synthesize imgVenue;
+@synthesize imgCategory;
+@synthesize lblVenueName;
+@synthesize lblAddressLine1;
+@synthesize lblAddressLine2;
+@synthesize lblHours;
+@synthesize lblWebsite;
+@synthesize lblCategory;
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    NSLog(@"Venue %@", detailVenue);
+    [lblVenueName setText:detailVenue.name];
+
+    //Location
+    //UCSLocation* location = detailVenue.location
+
+    //Category
+    UCSCategory* category = [[detailVenue.categories allObjects] firstObject];
+    lblCategory.text = category.name;
+    NSDictionary* icon = [category valueForKey:@"icon"];
+    NSString* iconUrlString = [self imageFromPrefix:[icon valueForKey:@"prefix"] andSize:@"bg_64" andSuffix:[icon valueForKey:@"suffix"]];
+    [imgCategory sd_setImageWithURL:[NSURL URLWithString:iconUrlString]
+                   placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+
+    //Photo
+    UCSPhoto* photo = [[detailVenue.featuredPhotos.items allObjects] firstObject];
+    NSLog(@"Image %@", photo.suffix);
+    NSString* venueImageSize = [NSString stringWithFormat:@"%dx%d", photo.width, photo.height];
+    NSString* venueImageUrlString = [self imageFromPrefix:photo.prefix andSize:venueImageSize andSuffix:photo.suffix];
+    [imgVenue sd_setImageWithURL:[NSURL URLWithString:venueImageUrlString]
+                placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+//Builds image urlstring
+- (NSString*)imageFromPrefix:(NSString*)prefix andSize:(NSString*)size andSuffix:(NSString*)suffix
+{
+    NSString* urlString = [NSString stringWithFormat:@"%@%@%@", prefix, size, suffix];
+    return urlString;
 }
 
 /*
