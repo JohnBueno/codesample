@@ -35,22 +35,24 @@
                     withBlock:(void (^)(NSError*))block
 {
 
+    // If offset is zero new seach is starting so result persisted data
     if (offset == 0) {
         [[CoreDataStack defaultStack] clearAll];
     }
 
+    // Format strings for request payload
     NSString* ll = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
     NSString* offsetString = [NSString stringWithFormat:@"%d", offset];
     NSString* limitString = [NSString stringWithFormat:@"%d", limit];
 
     NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithObjectsAndKeys:kCLIENTID, @"client_id", kCLIENTSECRET, @"client_secret", @"20130815", @"v", limitString, @"limit", offsetString, @"offset", @"1", @"venuePhotos", @"1", @"sortByDistance", ll, @"ll", nil];
 
+    // Add query to request payload
     if (query) {
         [params addEntriesFromDictionary:[NSDictionary dictionaryWithObjectsAndKeys:query, @"query", nil]];
     }
 
-    //NSLog(@"Params %@", params);
-
+    // Make query using AFNetwork singleton
     [[AFAppFourSquareClient sharedClient] GET:@"/v2/venues/explore" parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
         //Response if Search
         //Might need this for query
@@ -71,6 +73,7 @@
 }
 
 // Manual Object Mapping
+// Create venue object and recursively map its properties using mapFromDictionary
 + (void)saveResponse:(NSDictionary*)dictionary
 {
     CoreDataStack* coreDataStack = [CoreDataStack defaultStack];
@@ -83,6 +86,7 @@
     [coreDataStack saveContext];
 }
 
+// Manual Recursive object mapping
 + (void)mapFromDictionary:(NSDictionary*)dictionary toObject:(NSManagedObject*)object
 {
     NSEntityDescription* entity = [object entity];
@@ -119,6 +123,7 @@
     }
 }
 
+// Create object property map
 // Map JSON Objects to NSManaged Objects
 + (NSManagedObject*)getManagedObjectNamed:(NSString*)objectName
 {

@@ -13,6 +13,11 @@
 
 /**
  Block function that returns a list of venues from Foursquare
+ param: float: user latitude from locaation data
+ param: float: longitude from locaation data
+ param: int: offset for results list
+ param: int: limit of results list
+ param: NSString: Specific query
  @return void
 */
 + (void)getVenuesNearLatitude:(float)latitude
@@ -22,5 +27,4 @@
                      andQuery:(NSString*)query
                     withBlock:(void (^)(NSError*))block;
 
-+ (void)saveResponse:(NSDictionary*)dictionary;
 @end
