@@ -39,12 +39,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // Call results from coredata
     [self.fetchedResultsController performFetch:nil];
     [self setUpInfiniteScrolling];
 }
 
+// Pagination
 - (void)setUpInfiniteScrolling
 {
+    // Init limit and offset
     limit = 10;
     offset = 10;
 
