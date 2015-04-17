@@ -15,12 +15,12 @@
  Block function that returns a list of venues from Foursquare
  @return void
 */
-- (void)getVenuesNearLatitude:(float)latitude
++ (void)getVenuesNearLatitude:(float)latitude
                  andLongitude:(float)longitude
                     andOffset:(int)offset
                      andLimit:(int)limit
                      andQuery:(NSString*)query
                     withBlock:(void (^)(NSError*))block;
 
-- (void)saveResponse:(NSDictionary*)dictionary;
++ (void)saveResponse:(NSDictionary*)dictionary;
 @end

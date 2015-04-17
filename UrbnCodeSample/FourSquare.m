@@ -27,7 +27,7 @@
 @implementation FourSquare
 @synthesize objectMap;
 
-- (void)getVenuesNearLatitude:(float)latitude
++ (void)getVenuesNearLatitude:(float)latitude
                  andLongitude:(float)longitude
                     andOffset:(int)offset
                      andLimit:(int)limit
@@ -61,7 +61,7 @@
         NSArray *exploreArray = [[items firstObject] objectForKey:@"items"];
         for (NSDictionary* item in exploreArray) {
             //NSLog(@"Venue %@", [item objectForKey:@"venue"]);
-            [self saveResponse:[item objectForKey:@"venue"]];
+            [FourSquare saveResponse:[item objectForKey:@"venue"]];
         }
         block(nil);
 
@@ -71,19 +71,19 @@
 }
 
 // Manual Object Mapping
-- (void)saveResponse:(NSDictionary*)dictionary
++ (void)saveResponse:(NSDictionary*)dictionary
 {
     CoreDataStack* coreDataStack = [CoreDataStack defaultStack];
     // Create Venue
     UCSVenue* venue = [NSEntityDescription insertNewObjectForEntityForName:@"UCSVenue" inManagedObjectContext:coreDataStack.managedObjectContext];
     // Set Id manually from foursquare because id is reserved
     [venue setVenueId:[dictionary objectForKey:@"id"]];
-    [self mapFromDictionary:dictionary toObject:venue];
+    [FourSquare mapFromDictionary:dictionary toObject:venue];
 
     [coreDataStack saveContext];
 }
 
-- (void)mapFromDictionary:(NSDictionary*)dictionary toObject:(NSManagedObject*)object
++ (void)mapFromDictionary:(NSDictionary*)dictionary toObject:(NSManagedObject*)object
 {
     NSEntityDescription* entity = [object entity];
     for (NSPropertyDescription* property in entity) {
@@ -97,7 +97,7 @@
         }
         else {
             //If entity is a relationship call mapping recursively
-            NSManagedObject* relationship = [self getManagedObjectNamed:[property name]];
+            NSManagedObject* relationship = [FourSquare getManagedObjectNamed:[property name]];
 
             //If this property is an array then loop through and set 1 to many relationship
             if ([[dictionary objectForKey:[property name]] isKindOfClass:[NSArray class]]) {
@@ -106,13 +106,13 @@
                 NSArray* objectArray = [dictionary objectForKey:[property name]];
 
                 for (NSDictionary* element in objectArray) {
-                    [self mapFromDictionary:element toObject:relationship];
+                    [FourSquare mapFromDictionary:element toObject:relationship];
                     [objectSet addObject:relationship];
                 }
             }
             //Else property is just a dictionary no need to iterate
             else {
-                [self mapFromDictionary:[dictionary objectForKey:[property name]] toObject:relationship];
+                [FourSquare mapFromDictionary:[dictionary objectForKey:[property name]] toObject:relationship];
                 [object setValue:relationship forKey:[property name]];
             }
         }
@@ -120,7 +120,7 @@
 }
 
 // Map JSON Objects to NSManaged Objects
-- (NSManagedObject*)getManagedObjectNamed:(NSString*)objectName
++ (NSManagedObject*)getManagedObjectNamed:(NSString*)objectName
 {
 
     CoreDataStack* coreDataStack = [CoreDataStack defaultStack];

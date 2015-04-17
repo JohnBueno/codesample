@@ -56,8 +56,7 @@
 
     [self.tableView addInfiniteScrollingWithActionHandler:^{
         
-        FourSquare *fourSquare = [[FourSquare alloc] init];
-        [fourSquare getVenuesNearLatitude:weakSelf.latitude
+        [FourSquare getVenuesNearLatitude:weakSelf.latitude
                              andLongitude:weakSelf.longitude
                                 andOffset:weakSelf.offset
                                  andLimit:weakSelf.limit

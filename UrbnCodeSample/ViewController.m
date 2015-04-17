@@ -31,7 +31,7 @@
     float longitude;
     NSString* query;
     BOOL didFindLocation;
-    FourSquare* fourSquare;
+    //FourSquare* fourSquare;
 }
 
 @synthesize lblAddress;
@@ -40,7 +40,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    fourSquare = [[FourSquare alloc] init];
     geoCoder = [[CLGeocoder alloc] init];
     [self getlocation];
 }
@@ -72,7 +71,7 @@
 {
     [SVProgressHUD showWithStatus:@"Generating List" maskType:SVProgressHUDMaskTypeGradient];
 
-    [fourSquare getVenuesNearLatitude:latitude
+    [FourSquare getVenuesNearLatitude:latitude
                          andLongitude:longitude
                             andOffset:0
                              andLimit:10
