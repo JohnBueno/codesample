@@ -61,10 +61,12 @@
 
     if (lblAddress.hidden) {
         [btnToggleSearch setTitle:@"Show me everything" forState:UIControlStateNormal];
+        [btnSearch removeTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
         [btnSearch addTarget:self action:@selector(searchForQuery) forControlEvents:UIControlEventTouchUpInside];
     }
     else {
         [btnToggleSearch setTitle:@"Find something specfic" forState:UIControlStateNormal];
+        [btnSearch removeTarget:self action:@selector(searchForQuery) forControlEvents:UIControlEventTouchUpInside];
         [btnSearch addTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
     }
 }
