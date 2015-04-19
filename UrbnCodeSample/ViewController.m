@@ -26,6 +26,7 @@
 @property (strong, nonatomic) IBOutlet UITextField* inputQuery;
 @property (strong, nonatomic) IBOutlet UIButton* btnToggleSearch;
 @property (strong, nonatomic) IBOutlet UIButton* btnSearch;
+@property (strong, nonatomic) IBOutlet UILabel* lblSearchType;
 
 @end
 
@@ -44,6 +45,7 @@
 @synthesize inputQuery;
 @synthesize btnToggleSearch;
 @synthesize btnSearch;
+@synthesize lblSearchType;
 
 - (void)viewDidLoad
 {
@@ -61,11 +63,14 @@
 
     if (lblAddress.hidden) {
         [btnToggleSearch setTitle:@"Show me everything" forState:UIControlStateNormal];
+        [lblSearchType setText:@"I'm looking for:"];
+
         [btnSearch removeTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
         [btnSearch addTarget:self action:@selector(searchForQuery) forControlEvents:UIControlEventTouchUpInside];
     }
     else {
         [btnToggleSearch setTitle:@"Find something specfic" forState:UIControlStateNormal];
+        [lblSearchType setText:@"Show me everything near:"];
         [btnSearch removeTarget:self action:@selector(searchForQuery) forControlEvents:UIControlEventTouchUpInside];
         [btnSearch addTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
     }

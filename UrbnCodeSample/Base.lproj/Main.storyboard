@@ -131,6 +131,7 @@
                         <outlet property="btnToggleSearch" destination="T8s-yl-j2P" id="CLj-tM-Ghx"/>
                         <outlet property="inputQuery" destination="Tt9-AA-xM1" id="IWB-Ka-H7I"/>
                         <outlet property="lblAddress" destination="h4W-dU-EfO" id="emz-Ms-0qC"/>
+                        <outlet property="lblSearchType" destination="Puv-4G-JZ2" id="vgd-H6-9g5"/>
                         <segue destination="GWI-he-Mjq" kind="show" identifier="showResults" id="52d-Kq-3wg"/>
                     </connections>
                 </viewController>
