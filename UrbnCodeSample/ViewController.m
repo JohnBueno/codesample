@@ -57,6 +57,18 @@
     geoCoder = [[CLGeocoder alloc] init];
     [self getlocation];
     [btnSearch addTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
+
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc]
+        initWithTarget:self
+                action:@selector(dismissKeyboard)];
+
+    [self.view addGestureRecognizer:tap];
+}
+
+- (void)dismissKeyboard
+{
+    [inputQuery resignFirstResponder];
+    [inputNear resignFirstResponder];
 }
 
 // Toggle Search function
@@ -75,8 +87,8 @@
     else {
         [self showQuery];
     }
-    [inputQuery resignFirstResponder];
-    [inputNear resignFirstResponder];
+
+    [self dismissKeyboard];
 }
 
 //Show location input
@@ -137,8 +149,7 @@
 // Request venues from FourSquare
 - (void)requestVenuesFromFourSquareWithQuery:(NSString*)_query
 {
-    [inputQuery resignFirstResponder];
-    [inputNear resignFirstResponder];
+    [self dismissKeyboard];
     [SVProgressHUD showWithStatus:@"Generating List" maskType:SVProgressHUDMaskTypeGradient];
 
     [FourSquare getVenuesNearLatitude:latitude
