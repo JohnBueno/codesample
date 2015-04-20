@@ -25,6 +25,7 @@
                     andOffset:(int)offset
                      andLimit:(int)limit
                      andQuery:(NSString*)query
+                      andNear:(NSString*)near
                     withBlock:(void (^)(NSError*))block;
 
 @end

@@ -89,6 +89,11 @@
                                     <action selector="toggleSearchPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="p7q-1J-Cmp"/>
                                 </connections>
                             </button>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="akf-6n-lPp">
+                                <rect key="frame" x="91" y="223" width="193" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -129,6 +134,7 @@
                     <connections>
                         <outlet property="btnSearch" destination="7F0-DH-Hh7" id="Q72-Os-QgT"/>
                         <outlet property="btnToggleSearch" destination="T8s-yl-j2P" id="CLj-tM-Ghx"/>
+                        <outlet property="inputNear" destination="akf-6n-lPp" id="vqn-xi-9sQ"/>
                         <outlet property="inputQuery" destination="Tt9-AA-xM1" id="IWB-Ka-H7I"/>
                         <outlet property="lblAddress" destination="h4W-dU-EfO" id="emz-Ms-0qC"/>
                         <outlet property="lblSearchType" destination="Puv-4G-JZ2" id="vgd-H6-9g5"/>

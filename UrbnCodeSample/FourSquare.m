@@ -32,6 +32,7 @@
                     andOffset:(int)offset
                      andLimit:(int)limit
                      andQuery:(NSString*)query
+                      andNear:(NSString*)near
                     withBlock:(void (^)(NSError*))block
 {
 
@@ -41,15 +42,23 @@
     }
 
     // Format strings for request payload
-    NSString* ll = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
     NSString* offsetString = [NSString stringWithFormat:@"%d", offset];
     NSString* limitString = [NSString stringWithFormat:@"%d", limit];
 
-    NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithObjectsAndKeys:kCLIENTID, @"client_id", kCLIENTSECRET, @"client_secret", @"20130815", @"v", limitString, @"limit", offsetString, @"offset", @"1", @"venuePhotos", @"1", @"sortByDistance", ll, @"ll", nil];
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithObjectsAndKeys:kCLIENTID, @"client_id", kCLIENTSECRET, @"client_secret", @"20130815", @"v", limitString, @"limit", offsetString, @"offset", @"1", @"venuePhotos", @"1", @"sortByDistance", nil];
 
     // Add query to request payload
     if (query) {
         [params addEntriesFromDictionary:[NSDictionary dictionaryWithObjectsAndKeys:query, @"query", nil]];
+    }
+
+    if (latitude && longitude) {
+
+        NSString* ll = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
+        [params addEntriesFromDictionary:[NSDictionary dictionaryWithObjectsAndKeys:ll, @"ll", nil]];
+    }
+    else {
+        [params addEntriesFromDictionary:[NSDictionary dictionaryWithObjectsAndKeys:near, @"near", nil]];
     }
 
     // Make query using AFNetwork singleton

@@ -35,6 +35,7 @@
 @synthesize queryString;
 @synthesize offset;
 @synthesize limit;
+@synthesize nearString;
 
 - (void)viewDidLoad
 {
@@ -61,6 +62,7 @@
                                 andOffset:weakSelf.offset
                                  andLimit:weakSelf.limit
                                  andQuery:weakSelf.queryString
+                                  andNear:weakSelf.nearString
                                 withBlock:^(NSError *error) {
                                     if (!error) {
                                         offset += limit;

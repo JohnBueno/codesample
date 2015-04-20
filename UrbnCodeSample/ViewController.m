@@ -12,7 +12,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 
-@interface ViewController () <CLLocationManagerDelegate>
+@interface ViewController () <CLLocationManagerDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel* lblAddress;
 - (IBAction)toggleSearchPressed:(id)sender;
@@ -27,6 +27,8 @@
 @property (strong, nonatomic) IBOutlet UIButton* btnToggleSearch;
 @property (strong, nonatomic) IBOutlet UIButton* btnSearch;
 @property (strong, nonatomic) IBOutlet UILabel* lblSearchType;
+@property (strong, nonatomic) IBOutlet UITextField* inputNear;
+@property BOOL isLocationEnabled;
 
 @end
 
@@ -46,6 +48,8 @@
 @synthesize btnToggleSearch;
 @synthesize btnSearch;
 @synthesize lblSearchType;
+@synthesize inputNear;
+@synthesize isLocationEnabled;
 
 - (void)viewDidLoad
 {
@@ -61,26 +65,51 @@
     [lblAddress setHidden:!lblAddress.hidden];
     [inputQuery setHidden:!inputQuery.hidden];
 
-    if (lblAddress.hidden) {
-        [btnToggleSearch setTitle:@"Show me everything" forState:UIControlStateNormal];
-        [lblSearchType setText:@"I'm looking for:"];
-
-        [btnSearch removeTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
-        [btnSearch addTarget:self action:@selector(searchForQuery) forControlEvents:UIControlEventTouchUpInside];
+    // If no location services require manual entry for city
+    if (isLocationEnabled == NO && [inputNear.text isEqual:@""]) {
+        [self mustEnterLocation];
+    }
+    else if (lblAddress.hidden) {
+        [self showLocation];
     }
     else {
-        [btnToggleSearch setTitle:@"Find something specfic" forState:UIControlStateNormal];
-        [lblSearchType setText:@"Show me everything near:"];
-        [btnSearch removeTarget:self action:@selector(searchForQuery) forControlEvents:UIControlEventTouchUpInside];
-        [btnSearch addTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self showQuery];
     }
+    [inputQuery resignFirstResponder];
+    [inputNear resignFirstResponder];
+}
+
+//Show location input
+- (void)showLocation
+{
+    [btnToggleSearch setTitle:@"Show me everything" forState:UIControlStateNormal];
+    [lblSearchType setText:@"I'm looking for:"];
+    [inputNear setHidden:YES];
+    [btnSearch removeTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
+    [btnSearch addTarget:self action:@selector(searchForQuery) forControlEvents:UIControlEventTouchUpInside];
+}
+
+//Show specific query input
+- (void)showQuery
+{
+    [btnToggleSearch setTitle:@"Find something specfic" forState:UIControlStateNormal];
+    [lblSearchType setText:@"Show me everything near:"];
+    if (!isLocationEnabled) {
+        [inputNear setHidden:NO];
+    }
+    [btnSearch removeTarget:self action:@selector(searchForQuery) forControlEvents:UIControlEventTouchUpInside];
+    [btnSearch addTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
 }
 
 // View all results for location
 - (void)viewResultsBtnPressed
 {
-    NSLog(@"View Results");
-    [self requestVenuesFromFourSquareWithQuery:nil];
+    if (isLocationEnabled == NO && [inputNear.text isEqual:@""]) {
+        [self mustEnterLocation];
+    }
+    else {
+        [self requestVenuesFromFourSquareWithQuery:nil];
+    }
 }
 
 // Search for query near location
@@ -99,6 +128,12 @@
     [self getlocation];
 }
 
+- (void)mustEnterLocation
+{
+    UIAlertView* loactionError = [[UIAlertView alloc] initWithTitle:@"Location Error" message:@"Please manually enter a location before searching." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    [loactionError show];
+}
+
 // Request venues from FourSquare
 - (void)requestVenuesFromFourSquareWithQuery:(NSString*)_query
 {
@@ -109,6 +144,7 @@
                             andOffset:0
                              andLimit:10
                              andQuery:_query
+                              andNear:inputNear.text
                             withBlock:^(NSError* error) {
                                 
                                 [SVProgressHUD dismiss];
@@ -131,6 +167,7 @@
         venueTableViewController.latitude = latitude;
         venueTableViewController.longitude = longitude;
         venueTableViewController.queryString = query;
+        venueTableViewController.nearString = inputNear.text;
     }
 }
 
@@ -166,12 +203,26 @@
     else {
         errorMessage = @"Location Services are not available";
     }
+    [self setIsLocationEnabled:NO];
+    [inputNear setHidden:NO];
 
     UIAlertView* locationError = [[UIAlertView alloc] initWithTitle:@"Error getting location" message:errorMessage delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
     // Add instructions if in simulator
     [locationError show];
 
-    [lblAddress setText:@"Location services not available"];
+    [lblAddress setText:@""];
+}
+
+- (void)locationManager:(CLLocationManager*)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    if (status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied || status == kCLAuthorizationStatusNotDetermined) {
+        isLocationEnabled = NO;
+        [inputNear setHidden:NO];
+    }
+    else {
+        isLocationEnabled = YES;
+        [inputNear setHidden:YES];
+    }
 }
 
 - (void)locationManager:(CLLocationManager*)manager

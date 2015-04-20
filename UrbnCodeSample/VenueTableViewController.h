@@ -13,5 +13,6 @@
 @property float latitude;
 @property float longitude;
 @property (strong, nonatomic) NSString* queryString;
+@property (strong, nonatomic) NSString* nearString;
 
 @end
