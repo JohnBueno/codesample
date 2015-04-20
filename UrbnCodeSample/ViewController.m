@@ -137,6 +137,8 @@
 // Request venues from FourSquare
 - (void)requestVenuesFromFourSquareWithQuery:(NSString*)_query
 {
+    [inputQuery resignFirstResponder];
+    [inputNear resignFirstResponder];
     [SVProgressHUD showWithStatus:@"Generating List" maskType:SVProgressHUDMaskTypeGradient];
 
     [FourSquare getVenuesNearLatitude:latitude
