@@ -30,13 +30,6 @@
 
 @implementation VenueTableViewController
 
-@synthesize latitude;
-@synthesize longitude;
-@synthesize queryString;
-@synthesize offset;
-@synthesize limit;
-@synthesize nearString;
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -49,8 +42,8 @@
 - (void)setUpInfiniteScrolling
 {
     // Init limit and offset
-    limit = 10;
-    offset = 10;
+    self.limit = 10;
+    self.offset = 10;
 
     // load more content when scroll to the bottom most
     __weak typeof(self) weakSelf = self;
@@ -65,7 +58,7 @@
                                   andNear:weakSelf.nearString
                                 withBlock:^(NSError *error) {
                                     if (!error) {
-                                        offset += limit;
+                                        weakSelf.offset += weakSelf.limit;
                                         [weakSelf.fetchedResultsController performFetch:nil];
                                     }else{
                                         NSLog(@"Error %@", error);

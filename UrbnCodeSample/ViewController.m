@@ -43,20 +43,12 @@
     //FourSquare* fourSquare;
 }
 
-@synthesize lblAddress;
-@synthesize inputQuery;
-@synthesize btnToggleSearch;
-@synthesize btnSearch;
-@synthesize lblSearchType;
-@synthesize inputNear;
-@synthesize isLocationEnabled;
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     geoCoder = [[CLGeocoder alloc] init];
     [self getlocation];
-    [btnSearch addTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.btnSearch addTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
 
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc]
         initWithTarget:self
@@ -67,21 +59,21 @@
 
 - (void)dismissKeyboard
 {
-    [inputQuery resignFirstResponder];
-    [inputNear resignFirstResponder];
+    [self.inputQuery resignFirstResponder];
+    [self.inputNear resignFirstResponder];
 }
 
 // Toggle Search function
 - (IBAction)toggleSearchPressed:(id)sender
 {
-    [lblAddress setHidden:!lblAddress.hidden];
-    [inputQuery setHidden:!inputQuery.hidden];
+    [self.lblAddress setHidden:!self.lblAddress.hidden];
+    [self.inputQuery setHidden:!self.inputQuery.hidden];
 
     // If no location services require manual entry for city
-    if (isLocationEnabled == NO && [inputNear.text isEqual:@""]) {
+    if (self.isLocationEnabled == NO && [self.inputNear.text isEqual:@""]) {
         [self mustEnterLocation];
     }
-    else if (lblAddress.hidden) {
+    else if (self.lblAddress.hidden) {
         [self showLocation];
     }
     else {
@@ -94,29 +86,29 @@
 //Show location input
 - (void)showLocation
 {
-    [btnToggleSearch setTitle:@"Show me everything" forState:UIControlStateNormal];
-    [lblSearchType setText:@"I'm looking for:"];
-    [inputNear setHidden:YES];
-    [btnSearch removeTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
-    [btnSearch addTarget:self action:@selector(searchForQuery) forControlEvents:UIControlEventTouchUpInside];
+    [self.btnToggleSearch setTitle:@"Show me everything" forState:UIControlStateNormal];
+    [self.lblSearchType setText:@"I'm looking for:"];
+    [self.inputNear setHidden:YES];
+    [self.btnSearch removeTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.btnSearch addTarget:self action:@selector(searchForQuery) forControlEvents:UIControlEventTouchUpInside];
 }
 
 //Show specific query input
 - (void)showQuery
 {
-    [btnToggleSearch setTitle:@"Find something specfic" forState:UIControlStateNormal];
-    [lblSearchType setText:@"Show me everything near:"];
-    if (!isLocationEnabled) {
-        [inputNear setHidden:NO];
+    [self.btnToggleSearch setTitle:@"Find something specfic" forState:UIControlStateNormal];
+    [self.lblSearchType setText:@"Show me everything near:"];
+    if (!self.isLocationEnabled) {
+        [self.inputNear setHidden:NO];
     }
-    [btnSearch removeTarget:self action:@selector(searchForQuery) forControlEvents:UIControlEventTouchUpInside];
-    [btnSearch addTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.btnSearch removeTarget:self action:@selector(searchForQuery) forControlEvents:UIControlEventTouchUpInside];
+    [self.btnSearch addTarget:self action:@selector(viewResultsBtnPressed) forControlEvents:UIControlEventTouchUpInside];
 }
 
 // View all results for location
 - (void)viewResultsBtnPressed
 {
-    if (isLocationEnabled == NO && [inputNear.text isEqual:@""]) {
+    if (self.isLocationEnabled == NO && [self.inputNear.text isEqual:@""]) {
         [self mustEnterLocation];
     }
     else {
@@ -127,9 +119,9 @@
 // Search for query near location
 - (void)searchForQuery
 {
-    query = inputQuery.text;
-    if (![inputQuery.text isEqualToString:@""]) {
-        query = inputQuery.text;
+    query = self.inputQuery.text;
+    if (![self.inputQuery.text isEqualToString:@""]) {
+        query = self.inputQuery.text;
     }
     [self requestVenuesFromFourSquareWithQuery:query];
 }
@@ -157,14 +149,14 @@
                             andOffset:0
                              andLimit:10
                              andQuery:_query
-                              andNear:inputNear.text
+                              andNear:self.inputNear.text
                             withBlock:^(NSError* error) {
                                 
                                 [SVProgressHUD dismiss];
                                 if(!error){
                                     //NSLog(@"Push to list");
                                     [self performSegueWithIdentifier:@"showResults" sender:self];
-                                    [inputQuery setText:@""];
+                                    [self.inputQuery setText:@""];
                                 }else{
                                     NSLog(@"error %@", error);
                                 }
@@ -180,7 +172,7 @@
         venueTableViewController.latitude = latitude;
         venueTableViewController.longitude = longitude;
         venueTableViewController.queryString = query;
-        venueTableViewController.nearString = inputNear.text;
+        venueTableViewController.nearString = self.inputNear.text;
     }
 }
 
@@ -217,24 +209,24 @@
         errorMessage = @"Location Services are not available";
     }
     [self setIsLocationEnabled:NO];
-    [inputNear setHidden:NO];
+    [self.inputNear setHidden:NO];
 
     UIAlertView* locationError = [[UIAlertView alloc] initWithTitle:@"Error getting location" message:errorMessage delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
     // Add instructions if in simulator
     [locationError show];
 
-    [lblAddress setText:@""];
+    [self.lblAddress setText:@""];
 }
 
 - (void)locationManager:(CLLocationManager*)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     if (status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied || status == kCLAuthorizationStatusNotDetermined) {
-        isLocationEnabled = NO;
-        [inputNear setHidden:NO];
+        self.isLocationEnabled = NO;
+        [self.inputNear setHidden:NO];
     }
     else {
-        isLocationEnabled = YES;
-        [inputNear setHidden:YES];
+        self.isLocationEnabled = YES;
+        [self.inputNear setHidden:YES];
     }
 }
 
@@ -248,6 +240,8 @@
         didFindLocation = YES;
         latitude = location.coordinate.latitude;
         longitude = location.coordinate.longitude;
+        self.isLocationEnabled = YES;
+        [self.inputNear setHidden:YES];
         [SVProgressHUD dismiss];
     }
     [self getAddressForLocation:location];
@@ -285,7 +279,7 @@
                 [label appendString:[NSString stringWithFormat:@"%@ ", placeMark.country]];
             }
             
-            [lblAddress setText:label];
+            [self.lblAddress setText:label];
             
         }else{
             NSLog(@"Error %@", error.debugDescription);
